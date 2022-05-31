@@ -5,6 +5,6 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/platforma
+    url: jdbc:postgresql://localhost:5432/basket_platform
     username: postgres
     password: 1111

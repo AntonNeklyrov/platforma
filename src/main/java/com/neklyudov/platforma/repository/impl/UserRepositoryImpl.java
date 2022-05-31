@@ -2,11 +2,14 @@ package com.neklyudov.platforma.repository.impl;
 
 import com.neklyudov.platforma.model.User;
 import com.neklyudov.platforma.repository.UserRepository;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-import java.sql.SQLException;
 import java.util.List;
+import java.sql.SQLException;
+
 import java.sql.ResultSet;
 
 @Repository
@@ -15,6 +18,7 @@ public class UserRepositoryImpl implements UserRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     UserRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate) {
+
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -71,23 +75,23 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findBySubscriptionId(long subscriptionId) {
+    public List<User> findBySubscriptionId(long subscriptionId) {
         var sql = """
                 SELECT user.id,
                        user.first_name,
                        user.middle_name,
                        user.card_number,
-                       user.email
+                       user.email,
                        user.password
                 FROM user
                     INNER JOIN subscription s on user.id = s.user_id
                 WHERE s.user_id = ?
                 """;
 
-        return jdbcTemplate.getJdbcOperations().query(sql, this::SubscriptionMapper, subscriptionId);
+        return jdbcTemplate.getJdbcOperations().query(sql, this::userMapper, subscriptionId);
     }
 
-    private User SubscriptionMapper(ResultSet rs, int rowNum) throws SQLException {
+    private User userMapper(ResultSet rs, int rowNum) throws SQLException {
         return User.builder()
                 .id(rs.getLong("id"))
                 .firstName(rs.getString("first_name"))

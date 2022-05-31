@@ -2,6 +2,10 @@ package com.neklyudov.platforma.repository.impl;
 
 import com.neklyudov.platforma.model.Commentator;
 import com.neklyudov.platforma.repository.CommentatorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -14,7 +18,9 @@ public class CommentatorRepositoryImpl implements CommentatorRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    CommentatorRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate) {
+    @Autowired
+    public CommentatorRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate) {
+
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -22,7 +28,7 @@ public class CommentatorRepositoryImpl implements CommentatorRepository {
     public long save(Commentator commentator) {
         var sql = """
             INSERT INTO commentator (first_name, last_name, email, password)
-            VALUES (:first_name, :last_name, :email, :password);
+            VALUES (:firstName, :lastName, :email, :password);
             """;
         var params = new MapSqlParameterSource()
                 .addValue("firstName", commentator.getFirstName())
@@ -88,7 +94,7 @@ public class CommentatorRepositoryImpl implements CommentatorRepository {
                        commentator.last_name,
                        commentator.email,
                        commentator.password
-                    FROM commentator;
+                    FROM commentator
                     WHERE id = ?;
                     """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::commentatorMapper, id)
