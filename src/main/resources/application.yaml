@@ -1,0 +1,10 @@
+server:
+  servlet:
+    context-path: /platforma/api
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/platforma
+    username: postgres
+    password: 1111
