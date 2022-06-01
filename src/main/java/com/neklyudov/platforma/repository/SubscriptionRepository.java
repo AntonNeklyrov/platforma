@@ -12,6 +12,6 @@ public interface SubscriptionRepository {
     void delete(long id);
 
     List<Subscription> findAll();
-    List<League> findByLeagueId(long leagueId);
-    List<User> findByUserId(long userId);
+    List<Subscription> findByLeagueId(long leagueId);
+    List<Subscription> findByUserId(long userId);
 }

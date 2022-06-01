@@ -12,5 +12,6 @@ public interface TranslationRepository {
     void delete(long id);
 
     List<Translation> findAll();
-    List<League> findByLeagueId(long leagueId);
+    List<Translation> findByLeagueId(long leagueId);
+    List<Translation> findByCommentatorId(long commentatorId);
 }

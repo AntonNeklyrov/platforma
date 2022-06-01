@@ -1,0 +1,21 @@
+<div th:fragment="header" class="header__wrapper container-fluid">
+  <header class="header container-1100">
+    <a th:href="@{/}" class="header__logo">Translations</a>
+    <div class="header__genres">
+      <nav><a th:href="@{/main}">Главная</a></nav>
+      <nav><a th:href="@{/translations}">Трансляции</a></nav>
+      <nav><a th:href="@{/subscriptions}">Подписки</a></nav>
+<!--      <nav th:if="${session.isAdmin} != null"><a th:href="@{/admin}">Админка</a></nav>-->
+    </div>
+    <div class="header__right-buttons">
+<!--      <a class="publications__create-publications-btn btn" th:if="${session.userId != null}"-->
+<!--         th:href="@{/publications/add}">Написать публикацию</a>-->
+      <a th:if="${session.userId == null}" class="header__sign-in btn" th:href="@{/sign-in}">
+        Войти
+      </a>
+      <a th:unless="${session.userId == null}" class="header__logout btn" th:href="@{/logout}">
+        Выйти
+      </a>
+    </div>
+  </header>
+</div>

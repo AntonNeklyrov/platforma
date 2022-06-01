@@ -10,8 +10,8 @@ public interface TranslationService {
     void updateTranslation(Translation translation);
     void deleteTranslation(long id);
 
-    Translation getTranslationByLeagueId(long id);
-    Translation getTranslationByCommentatorId(long ig);
+    List<Translation> getTranslationsByLeagueId(long id);
+    List<Translation> getTranslationsByCommentatorId(long id);
 
     List<Translation> getAllTranslations();
 }

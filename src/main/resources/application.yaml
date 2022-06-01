@@ -8,3 +8,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/basket_platform
     username: postgres
     password: 1111
+
+  thymeleaf:
+   cache: false
+   mode: HTML
+   encoding: UTF-8
+

@@ -13,5 +13,5 @@ public interface CommentatorService {
 
     Commentator getCommentatorById(long id);
 
-    List<Commentator> getAllCommentator();
+    List<Commentator> getAllCommentators();
 }

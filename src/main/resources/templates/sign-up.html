@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<div th:replace="~{fragments/header}"></div>
+<main class="auth-main container-1100">
+    <div class="auth-form_wrapper">
+        <h1 class="auth-main_wrapper"></h1>
+        <form class="auth-form" th:action="@{/sign-up}" th:object="${user}" method="post">
+            <input type="text" th:field="*{firstName}" placeholder="Имя" required/>
+            <input type="text" th:field="*{lastName}" placeholder="Фамилия" required/>
+            <input type="text" th:field="*{cardNumber}" placeholder="Платежные данные" required/>
+            <input type="text" th:field="*{email}" placeholder="Электронная почта" required/>
+            <input type="password" th:field="*{password}" placeholder="Пароль" required/>
+            <input type="submit" value="Зарегистрироваться"/>
+        </form>
+    </div>
+</main>
+</body>
+</html>

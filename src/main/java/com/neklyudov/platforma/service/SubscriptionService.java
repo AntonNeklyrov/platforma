@@ -11,8 +11,8 @@ public interface SubscriptionService {
     void updateSubscription(Subscription subscription);
     void deleteSubscription(long id);
 
-    Subscription getSubscriptionByUserId(long id);
-    Subscription getSubscriptionByLeagueId(long id);
+    List<Subscription> getSubscriptionsByUserId(long id);
+    List<Subscription> getSubscriptionsByLeagueId(long id);
 
-    List<Subscription> getAllSubscription();
+    List<Subscription> getAllSubscriptions();
 }

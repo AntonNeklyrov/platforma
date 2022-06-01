@@ -11,6 +11,7 @@ import java.util.List;
 import java.sql.SQLException;
 
 import java.sql.ResultSet;
+import java.util.Optional;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -25,7 +26,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public long save(User user) {
         var sql = """
-               INSERT INTO user(first_name,last_name,card_number,email,password)
+               INSERT INTO users(first_name,last_name,card_number,email,password)
                VALUES(:firstName,:lastName,:cardNumber,:email, :password);
                """;
         var params = new MapSqlParameterSource()
@@ -45,7 +46,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void update(User user) {
         var sql = """
-                UPDATE user
+                UPDATE users
                 SET first_name =  :firstName,
                     last_name = :lastName,
                     card_number = :card_number,
@@ -68,7 +69,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void delete(long id) {
         var sql = """
                 DELETE
-                FROM user
+                FROM users
                 WHERE id = ?;
                 """;
         jdbcTemplate.getJdbcOperations().update(sql, id);
@@ -77,18 +78,50 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<User> findBySubscriptionId(long subscriptionId) {
         var sql = """
-                SELECT user.id,
-                       user.first_name,
-                       user.middle_name,
-                       user.card_number,
-                       user.email,
-                       user.password
-                FROM user
-                    INNER JOIN subscription s on user.id = s.user_id
-                WHERE s.user_id = ?
+                SELECT users.id,
+                       users.first_name,
+                       users.middle_name,
+                       users.card_number,
+                       users.email,
+                       users.password,
+                FROM users
+                    INNER JOIN subscription s on users.id = s.user_id
+                WHERE s.id = ?
                 """;
 
         return jdbcTemplate.getJdbcOperations().query(sql, this::userMapper, subscriptionId);
+    }
+
+    @Override
+    public Optional<User> getById(long id) {
+        var sql = """
+                   SELECT users.id,
+                          users.first_name,
+                          users.last_name,
+                          users.card_number,
+                          users.email,
+                          users.password
+                    FROM users 
+                    WHERE id = ?;
+                    """;
+        return jdbcTemplate.getJdbcTemplate().query(sql, this::userMapper, id)
+                .stream().findAny();
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        var sql = """
+                   SELECT users.id,
+                          users.first_name,
+                          users.last_name,
+                          users.card_number,
+                          users.email,
+                          users.password
+                    FROM users 
+                    WHERE email = ?;
+                    """;
+        return jdbcTemplate.getJdbcTemplate().query(sql, this::userMapper, email)
+                .stream().findAny();
     }
 
     private User userMapper(ResultSet rs, int rowNum) throws SQLException {

@@ -1,8 +1,11 @@
 package com.neklyudov.platforma.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 
-
+@Data
+@AllArgsConstructor
 public class Commentator {
 
     private Long id;
@@ -49,6 +52,12 @@ public class Commentator {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Commentator(){}
+
+    public Commentator(String firstName){
+        this.firstName = firstName;
     }
 
     public static CommentatorBuilder builder() {
