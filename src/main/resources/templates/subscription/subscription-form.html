@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание подписки</title>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header}"></div>
+    <div class="create-form__wrapper container-1100">
+        <h1 class="create-form__header">Создание подписки</h1>
+        <form class="form-create-subscription" th:action="@{/subscriptions}" th:object="${subscription}" method="post">
+
+            <div class="form-create-subscription__leagues">
+                <label class="form-group">Лига</label><br>
+                <select th:field="*{leagueId}" id="leagueId">
+                    <option th:each="l : ${leagues}"
+                            th:value="${l.id}"
+                            th:text="${l.name}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-create-subscription__cost">
+                <label>Цена</label><br>
+                <input class="form-create-subscription__cost" type="text" th:field="*{cost}"/>
+            </div>
+
+            <div class="form-create-subscription__period">
+                <label>Количество месяцев</label><br>
+                <input class="form-create-subscription__period" type="text" th:field="*{period}"/>
+            </div>
+
+            <div class="form-create-subscription__submit-wrapper">
+                <input type="submit" value="Создать подписку"/>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

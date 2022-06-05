@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Трансляции</title>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header}"></div>
+    <main class="publications__main-content container-900">
+        <div class="main-center">
+
+            <div th:each="subscription : ${subscriptions}">
+
+                    <div>
+                        <span th:text="${subscription.league.name}"></span>
+                    </div>
+
+                    <div>
+                        <span th:text="${subscription.cost}"></span>
+                    </div>
+
+                    <div>
+                        <span th:text="${subscription.period}"></span>
+                    </div>
+
+                    <div>
+                        <a th:action="@{/subscribtions}" th:method="post" th:object="${subscription}">
+                            <h3>Подписаться</h3>
+                        </a>
+                    </div>
+
+                    <div>
+                        <a th:if="${session.userId == 1}"  th:href="@{/subscriptions/update}">
+                            <h3>Редактировать подписку</h3>
+                        </a>
+                    </div>
+
+                     <div th:if="${session.userId == 1}" th:field="*{subscription.id}" th:href="@{/subscription}" th:method="delete">
+                     Удалить подписку
+                    </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer th:replace="fragments/footer"></footer>
+</div>
+</body>
+</html>

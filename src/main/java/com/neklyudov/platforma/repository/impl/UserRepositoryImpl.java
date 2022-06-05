@@ -40,7 +40,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         jdbcTemplate.update(sql, params, keyHolder);
 
-        return (long) keyHolder.getKeys().get("id");
+        return (int) keyHolder.getKeys().get("id");
     }
 
     @Override
@@ -93,7 +93,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> getById(long id) {
+    public Optional<User>  findById(Long id) {
         var sql = """
                    SELECT users.id,
                           users.first_name,
@@ -109,7 +109,24 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
+    public Optional<User> getUserByEmailAndPassword(String email, String password) {
+        var sql = """
+                   SELECT users.id,
+                          users.first_name,
+                          users.last_name,
+                          users.card_number,
+                          users.email,
+                          users.password
+                    FROM users 
+                    WHERE email = ? AND password = ? 
+                           ;
+                    """;
+        return jdbcTemplate.getJdbcTemplate().query(sql, this::userMapper, email, password)
+                .stream().findAny();
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
         var sql = """
                    SELECT users.id,
                           users.first_name,

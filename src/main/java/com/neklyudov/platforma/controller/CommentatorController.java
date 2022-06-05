@@ -4,17 +4,20 @@ package com.neklyudov.platforma.controller;
 import com.neklyudov.platforma.model.Commentator;
 import com.neklyudov.platforma.model.User;
 import com.neklyudov.platforma.service.CommentatorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/commentators")
 public class CommentatorController {
 
     private final CommentatorService commentatorService;
 
+    @Autowired
     public CommentatorController(CommentatorService commentatorService) {
         this.commentatorService = commentatorService;
     }

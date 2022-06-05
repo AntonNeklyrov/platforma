@@ -5,13 +5,16 @@ import com.neklyudov.platforma.model.Subscription;
 import com.neklyudov.platforma.model.Translation;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TranslationRepository {
     long save(Translation translation);
     void update(Translation translation);
-    void delete(long id);
+    void delete(Long id);
 
     List<Translation> findAll();
-    List<Translation> findByLeagueId(long leagueId);
-    List<Translation> findByCommentatorId(long commentatorId);
+    List<Translation> findByLeagueId(Long leagueId);
+    List<Translation> findByCommentatorId(Long commentatorId);
+    Optional<Translation> findById(Long Id);
+    List<Translation> findAllByUserId(Long userId);
 }

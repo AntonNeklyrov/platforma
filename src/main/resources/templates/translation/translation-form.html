@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание траниляции</title>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header}"></div>
+    <div class="create-form__wrapper container-1100">
+        <h1 class="create-form__header">Создание трансляции</h1>
+        <form class="form-create-translation" th:action="@{/translations}" th:object="${translation}"  method="post">
+
+            <div class="form-create-translation__leagues">
+                <label class="form-group">Лига</label><br>
+                <select th:field="*{leagueId}" id="leagueId">
+                    <option th:each="l : ${leagues}"
+                            th:value="${l.id}"
+                            th:text="${l.name}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-create-translation__homeTeam">
+                <label>Домашняя команда</label><br>
+                <input class="form-create-translation__homeTeam" type="text" th:field="*{homeTeam}"/>
+            </div>
+
+            <div class="form-create-translation__guestTeam">
+                <label>Гостевая команда</label><br>
+                <input class="form-create-translation__guestTeam" type="text" th:field="*{guestTeam}"/>
+            </div>
+
+            <div class="form-create-translation__data">
+                <label>Дата начала</label><br>
+                <input class="form-create-translation__data" type="date" th:field="*{date}"/>
+            </div>
+
+            <div class="form-create-translation__time">
+                <label>Время начала</label><br>
+                <input class="form-create-translation__time" type="time" th:field="*{time}"/>
+            </div>
+
+<!--            <div class="form-create-translation__commentator">-->
+<!--                <label class="form-group">Комментатор</label><br>-->
+<!--                <select th:field="*{commentatorId}" id="commentatorId">-->
+<!--                    <option th:each="commentator : ${commentators}"-->
+<!--                            th:value="${сommentator.id}"-->
+<!--                            th:text="${commentator.lastName}">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+
+            <div class="form-create-translation__submit-wrapper">
+                <input type="submit" value="Создать трансляцию"/>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>

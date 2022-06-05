@@ -11,7 +11,8 @@ public interface UserService {
     void updateUser(User user);
     void deleteUser(long id);
 
-     List<User> getUsersBySubscriptionId(long subscriptionId);
-     Optional<User> getUserById(long id);
-     Optional<Long> getUserByEmail(User user);
+     List<User> getUsersBySubscriptionId(Long subscriptionId);
+     User getUserById(Long id);
+     Optional<Long> getUserByEmailAndPassword(User user);
+
 }

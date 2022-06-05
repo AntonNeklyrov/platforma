@@ -2,18 +2,22 @@ package com.neklyudov.platforma.dto;
 
 import com.neklyudov.platforma.model.League;
 import com.neklyudov.platforma.model.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnNotWebApplication;
 
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateSubscriptionDto {
     @NonNull
     public Double cost;
     @NonNull
     public Integer period;
     @NonNull
-    public League league;
+    public Long leagueId;
+
 }

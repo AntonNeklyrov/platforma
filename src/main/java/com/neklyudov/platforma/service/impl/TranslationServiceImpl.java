@@ -1,6 +1,8 @@
 package com.neklyudov.platforma.service.impl;
 
-import com.neklyudov.platforma.model.Translation;
+import com.neklyudov.platforma.dto.CreateSubscriptionDto;
+import com.neklyudov.platforma.dto.CreateTranslationDto;
+import com.neklyudov.platforma.model.*;
 import com.neklyudov.platforma.repository.TranslationRepository;
 import com.neklyudov.platforma.service.TranslationService;
 import org.springframework.stereotype.Service;
@@ -17,8 +19,8 @@ public class TranslationServiceImpl implements TranslationService {
     }
 
     @Override
-    public long addTranslation(Translation translation) {
-        return translationRepository.save(translation);
+    public void addTranslation(Translation translation) {
+        translationRepository.save(translation);
     }
 
     @Override
@@ -29,6 +31,11 @@ public class TranslationServiceImpl implements TranslationService {
     @Override
     public void deleteTranslation(long id) {
         translationRepository.delete(id);
+    }
+
+    @Override
+    public Translation findById(long id) {
+        return translationRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     @Override
@@ -45,5 +52,24 @@ public class TranslationServiceImpl implements TranslationService {
     public List<Translation> getAllTranslations() {
 
         return translationRepository.findAll();
+    }
+
+    @Override
+    public Long save(CreateTranslationDto translationDto, Long userId) {
+        Translation translation = Translation.builder()
+                .homeTeam(translationDto.getHomeTeam())
+                .guestTeam(translationDto.getGuestTeam())
+                .date(translationDto.getDate())
+                .time(translationDto.getTime())
+                .league(League.builder().id(translationDto.getLeagueId()).build())
+                .user(User.builder().id(userId).build())
+                .commentator(Commentator.builder().id(translationDto.getCommentatorId()).build())
+                .build();
+        return translationRepository.save(translation);
+    }
+
+    @Override
+    public List<Translation> getTranslationsByUserId(Long userId) {
+        return translationRepository.findAllByUserId(userId);
     }
 }

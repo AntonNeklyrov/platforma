@@ -11,6 +11,8 @@ public interface UserRepository {
     void delete(long id);
 
     List<User> findBySubscriptionId(long subscriptionId);
-    Optional<User> getById(long id);
-    Optional<User> getUserByEmail(String email);
+    Optional<User> findById(Long id);
+    Optional<User> getUserByEmailAndPassword(String email, String password);
+    Optional<User> findUserByEmail(String email);
+
 }

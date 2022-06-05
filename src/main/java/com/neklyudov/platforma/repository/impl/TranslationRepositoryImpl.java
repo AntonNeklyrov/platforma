@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class TranslationRepositoryImpl implements TranslationRepository {
@@ -70,7 +71,7 @@ public class TranslationRepositoryImpl implements TranslationRepository {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         var sql = """
                 DELETE
                 FROM translation
@@ -90,13 +91,16 @@ public class TranslationRepositoryImpl implements TranslationRepository {
                        translation.home_team,
                        translation.start_date,
                        translation.start_time
-                FROM translation;
+                FROM translation
+                Inner JOIN users u on u.id = translation.user_id
+                WHERE u.id = 1;
                 """;
+
         return jdbcTemplate.getJdbcTemplate().query(sql, this::translationMapper);
     }
 
     @Override
-    public List<Translation> findByLeagueId(long leagueId) {
+    public List<Translation> findByLeagueId(Long leagueId) {
         var sql = """
                 SELECT translation.id,
                        translation.user_id,
@@ -114,7 +118,7 @@ public class TranslationRepositoryImpl implements TranslationRepository {
     }
 
     @Override
-    public List<Translation> findByCommentatorId(long commentatorId) {
+    public List<Translation> findByCommentatorId(Long commentatorId) {
         var sql = """
                 SELECT translation.id,
                        translation.user_id,
@@ -129,6 +133,42 @@ public class TranslationRepositoryImpl implements TranslationRepository {
                 WHERE c.id = ?
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::translationMapper);
+    }
+
+    @Override
+    public Optional<Translation> findById(Long Id) {
+        var sql = """
+                SELECT translation.id,
+                       translation.user_id,
+                       translation.league_id,
+                       translation.commentator_id,
+                       translation.guest_team,
+                       translation.home_team,
+                       translation.start_date,
+                       translation.start_time
+                FROM translation
+                WHERE translation.id = ?
+                """;
+        return jdbcTemplate.getJdbcTemplate().query(sql, this::translationMapper, Id)
+                .stream().findAny();
+    }
+
+    @Override
+    public List<Translation> findAllByUserId(Long userId) {
+        var sql = """
+                SELECT translation.id,
+                       translation.user_id,
+                       translation.league_id,
+                       translation.commentator_id,
+                       translation.guest_team,
+                       translation.home_team,
+                       translation.start_date,
+                       translation.start_time
+                FROM translation
+                WHERE user_id = ?
+                """;
+        return jdbcTemplate.getJdbcTemplate().query(sql, this::translationMapper, userId);
+
     }
 
     private Translation translationMapper(ResultSet rs, int rowNum) throws SQLException {

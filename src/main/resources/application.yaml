@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /platforma/api
+    context-path: /platforma/
 
 spring:
   datasource:

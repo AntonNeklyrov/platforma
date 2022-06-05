@@ -1,11 +1,12 @@
 <div th:fragment="header" class="header__wrapper container-fluid">
   <header class="header container-1100">
-    <a th:href="@{/}" class="header__logo">Translations</a>
-    <div class="header__genres">
+    <a th:href="@{/}" class="header__logo">Платформа</a>
+    <div class="header__main">
       <nav><a th:href="@{/main}">Главная</a></nav>
       <nav><a th:href="@{/translations}">Трансляции</a></nav>
       <nav><a th:href="@{/subscriptions}">Подписки</a></nav>
-<!--      <nav th:if="${session.isAdmin} != null"><a th:href="@{/admin}">Админка</a></nav>-->
+        <nav th:if="${session.userId} != null"><a th:href="@{/subscriptions/my-subscriptions}">Мои подписки</a></nav>
+
     </div>
     <div class="header__right-buttons">
 <!--      <a class="publications__create-publications-btn btn" th:if="${session.userId != null}"-->

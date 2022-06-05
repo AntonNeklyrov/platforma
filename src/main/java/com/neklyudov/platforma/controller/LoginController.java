@@ -49,7 +49,7 @@ public class LoginController {
 
     @PostMapping("/sign-in")
     public String signIn(@ModelAttribute User user, HttpSession httpSession) {
-        Optional<Long> optionalUserId = userService.getUserByEmail(user);
+        Optional<Long> optionalUserId = userService.getUserByEmailAndPassword(user);
         httpSession.setAttribute("userId", optionalUserId.get());
         return "redirect:/main";
     }

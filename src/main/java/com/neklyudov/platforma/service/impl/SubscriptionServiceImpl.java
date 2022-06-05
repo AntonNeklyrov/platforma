@@ -1,10 +1,14 @@
 package com.neklyudov.platforma.service.impl;
 
+import com.neklyudov.platforma.dto.CreateSubscriptionDto;
+import com.neklyudov.platforma.model.League;
 import com.neklyudov.platforma.model.Subscription;
+import com.neklyudov.platforma.model.User;
 import com.neklyudov.platforma.repository.SubscriptionRepository;
 import com.neklyudov.platforma.service.SubscriptionService;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,14 +37,19 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public List<Subscription> getSubscriptionsByUserId(long id) {
-        return subscriptionRepository.findByUserId(id);
+    public List<Subscription> getSubscriptionsByUserId(Long id) {
+        return subscriptionRepository.findAllByUserId(id);
     }
 
     @Override
-    public List<Subscription> getSubscriptionsByLeagueId(long id)
+    public List<Subscription> getSubscriptionsByLeagueId(Long id)
     {
         return subscriptionRepository.findByLeagueId(id);
+    }
+
+    @Override
+    public void updateCostAndDateById(long id, Double cost, Date date) {
+        subscriptionRepository.updateCostAndDateById(id,cost,date);
     }
 
     @Override
@@ -48,4 +57,23 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
         return null;
     }
+
+    @Override
+    public Long save(CreateSubscriptionDto subscriptionDto, Long userId) {
+        Subscription subscription = Subscription.builder()
+                .cost(subscriptionDto.getCost())
+                .period(subscriptionDto.getPeriod())
+                .league(League.builder().id(subscriptionDto.getLeagueId()).build())
+                .user(User.builder().id(userId).build())
+                .build();
+
+        return subscriptionRepository.save(subscription);
+    }
+
+    @Override
+    public Subscription findById(Long id) {
+        return subscriptionRepository.findById(id).orElseThrow(()->new RuntimeException("subscription not found"));
+    }
+
+
 }

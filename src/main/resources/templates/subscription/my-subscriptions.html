@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои подписки</title>
+</head>
+<body>
+<div class="wrapper">
+  <div th:replace="~{fragments/header}"></div>
+    <main class="publications__main-content container-900">
+        <section th:each="s : ${subscriptions}">
+            <p th:text="${s.league.name}">
+                Лига
+            </p>
+            <p th:text="${s.cost}">
+                Стоимость
+            </p>
+            <p th:text="${s.period}">
+                Период
+            </p>
+        </section>
+    </main>
+</div>
+</body>
+</html>

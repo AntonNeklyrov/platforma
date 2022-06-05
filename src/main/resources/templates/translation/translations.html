@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Трансляции</title>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header}"></div>
+    <div class="create-form__wrapper container-1100">
+        <div class="main-center">
+
+            <div th:each="translation : ${translations}">
+
+                <div>
+                    <label>Лига</label>
+                    <span th:text="${translation.league.name}"></span>
+                </div>
+
+                <div>
+                    <label>Домашняя команда</label>
+                    <span th:text="${translation.homeTeam}"></span>
+                </div>
+
+                <div>
+                    <label>Гостевая команда</label>
+                    <span th:text="${translation.guestTeam}"></span>
+                </div>
+
+                <div>
+                    <label>Дата начала</label>
+                    <span th:text="${translation.date}"></span>
+                </div>
+
+                <div>
+                    <label>Время начала</label>
+                    <span th:text="${translation.time}"></span>
+                </div>
+
+                <div>
+                    <label>Комментатор</label>
+                    <span th:if="${translation.commentator.id} != null" th:text="${translation.homeTeam}"></span>
+                    <span th:if="${translation.commentator.id} == null" th:text="Игра транслируется без комментаторов"></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

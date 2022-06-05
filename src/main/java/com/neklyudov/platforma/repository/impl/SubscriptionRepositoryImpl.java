@@ -13,10 +13,14 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 @Repository
-public class SubscriptionRepositoryImpl implements SubscriptionRepository {
+ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -39,7 +43,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
                 .addValue("leagueId", subscription.getLeague().getId())
                 .addValue("cost", subscription.getCost())
                 .addValue("period", subscription.getPeriod())
-                .addValue("date", subscription.getDate());
+                .addValue("date", LocalDate.now());
 
         var keyHolder = new GeneratedKeyHolder();
 
@@ -74,7 +78,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
         var sql = """
                 DELETE
                 FROM subscription
-                WHERE id = ?;
+                WHERE id = ? AND subscription.user_id = 1;
                 """;
         jdbcTemplate.getJdbcOperations().update(sql, id);
     }
@@ -88,13 +92,14 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
                        subscription.cost,
                        subscription.period,
                        subscription.date
-                FROM subscription;
+                FROM subscription
+                Where subscription.user_id = 1;
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::subscriptionMapper);
     }
 
     @Override
-    public List<Subscription> findByLeagueId(long leagueId) {
+    public List<Subscription> findByLeagueId(Long leagueId) {
         var sql = """
                 SELECT subscription.id,
                        subscription.user_id,
@@ -106,11 +111,11 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
                     INNER JOIN league l on l.id = subscription.league_id
                 WHERE l.id = ?
                 """;
-        return jdbcTemplate.getJdbcTemplate().query(sql, this::subscriptionMapper);
+        return jdbcTemplate.getJdbcTemplate().query(sql, this::subscriptionMapper, leagueId);
     }
 
     @Override
-    public List<Subscription> findByUserId(long userId) {
+    public List<Subscription> findAllByUserId(Long userId) {
         var sql = """
                 SELECT subscription.id,
                        subscription.user_id,
@@ -122,9 +127,38 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
                     INNER JOIN users u on u.id = subscription.user_id
                 WHERE u.id = ?
                 """;
-        return jdbcTemplate.getJdbcTemplate().query(sql, this::subscriptionMapper);
+        return jdbcTemplate.getJdbcTemplate().query(sql, this::subscriptionMapper,userId);
     }
 
+    @Override
+    public Optional<Subscription> findById(Long id) {
+        var sql  = """
+                SELECT subscription.id,
+                       subscription.user_id,
+                       subscription.league_id,
+                       subscription.cost,
+                       subscription.period,
+                       subscription.date
+                FROM subscription
+                Where id = ?;
+                """;
+        return jdbcTemplate.getJdbcTemplate().query(sql, this::subscriptionMapper, id).stream().findAny();
+    }
+
+    @Override
+    public void updateCostAndDateById(Long id, Double cost, Date date) {
+        var sql = """
+                UPDATE subscription
+                Set cost = :cost,
+                    date = :date
+                WHERE id = :id;
+                """;
+        var params = new MapSqlParameterSource()
+                .addValue("cost", cost)
+                .addValue("date", date);
+
+        jdbcTemplate.update(sql, params);
+    }
 
     private Subscription subscriptionMapper(ResultSet rs, int rowNum) throws SQLException {
         return Subscription.builder()

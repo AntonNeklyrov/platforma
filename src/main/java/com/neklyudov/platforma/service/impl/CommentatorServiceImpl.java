@@ -1,8 +1,8 @@
 package com.neklyudov.platforma.service.impl;
 
 import com.neklyudov.platforma.model.Commentator;
+import com.neklyudov.platforma.repository.CommentatorRepository;
 import com.neklyudov.platforma.service.CommentatorService;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,35 +10,34 @@ import java.util.List;
 @Service
 public class CommentatorServiceImpl implements CommentatorService {
 
-    private final CommentatorService commentatorService;
+    private final CommentatorRepository commentatorRepository;
 
-    public CommentatorServiceImpl(@Lazy CommentatorService commentatorService) {
-        super();
-        this.commentatorService = commentatorService;
+    public CommentatorServiceImpl(CommentatorRepository commentatorRepository) {
+        this.commentatorRepository = commentatorRepository;
     }
 
     @Override
     public long addCommentator(Commentator commentator) {
-        return commentatorService.addCommentator(commentator);
+        return commentatorRepository.save(commentator);
     }
 
     @Override
     public void updateCommentator(Commentator commentator) {
-        commentatorService.updateCommentator(commentator);
+        commentatorRepository.update(commentator);
     }
 
     @Override
     public void deleteCommentator(long id) {
-        commentatorService.deleteCommentator(id);
+        commentatorRepository.delete(id);
     }
 
     @Override
     public Commentator getCommentatorById(long id) {
-        return commentatorService.getCommentatorById(id);
+        return commentatorRepository.findById(id).orElseThrow(()->new RuntimeException("Commentator not found"));
     }
 
     @Override
     public List<Commentator> getAllCommentators() {
-        return commentatorService.getAllCommentators();
+        return commentatorRepository.findAll();
     }
 }

@@ -4,7 +4,9 @@ import com.neklyudov.platforma.model.League;
 import com.neklyudov.platforma.model.Subscription;
 import com.neklyudov.platforma.model.User;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface SubscriptionRepository {
     long save(Subscription subscription);
@@ -12,6 +14,8 @@ public interface SubscriptionRepository {
     void delete(long id);
 
     List<Subscription> findAll();
-    List<Subscription> findByLeagueId(long leagueId);
-    List<Subscription> findByUserId(long userId);
+    List<Subscription> findByLeagueId(Long leagueId);
+    void updateCostAndDateById(Long id, Double cost, Date date);
+    List<Subscription> findAllByUserId(Long userId);
+    Optional<Subscription> findById(Long id);
 }
