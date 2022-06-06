@@ -63,7 +63,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         Subscription subscription = Subscription.builder()
                 .cost(subscriptionDto.getCost())
                 .period(subscriptionDto.getPeriod())
-                .league(League.builder().id(subscriptionDto.getLeagueId()).build())
+                .league(League.builder().id(subscriptionDto.getLeagueId()).name(subscriptionDto.getLeagueName()).build())
                 .user(User.builder().id(userId).build())
                 .build();
 

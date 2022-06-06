@@ -40,12 +40,21 @@
                 <div>
                     <label>Комментатор</label>
                     <span th:if="${translation.commentator.id} != null" th:text="${translation.homeTeam}"></span>
-                    <span th:if="${translation.commentator.id} == null" th:text="Игра транслируется без комментаторов"></span>
+                    <span th:if="${translation.commentator.id} == null"
+                          th:text="Игра транслируется без комментаторов"></span>
                 </div>
 
+
             </div>
+
+            <nav><a th:if="${session.userId == 1 }"  th:href="@{/translations/add}">
+                <label>
+                    Создать трансляцию
+                </label>
+            </a></nav>
         </div>
     </div>
+
 </div>
 </body>
 </html>

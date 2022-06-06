@@ -52,8 +52,20 @@ public class SubscriptionController {
         return "redirect:/subscriptions";
     }
 
-    @GetMapping("/update")
-    public String showSubscriptionUpdateForm(Model model, @RequestParam long id, HttpSession httpSession) {
+    @PostMapping("/add-to-user")
+    public String addSubscriptionToUser(HttpSession httpSession, Subscription subscription){
+        CreateSubscriptionDto subscriptionDto = new CreateSubscriptionDto();
+        Long sessionUserId = (Long) httpSession.getAttribute("userId");
+        subscriptionDto.period = subscription.getPeriod();
+        subscriptionDto.cost = subscription.getCost();
+        subscriptionDto.leagueId = subscription.getLeague().getId();
+        subscriptionDto.leagueName = subscription.getLeague().getName();
+        subscriptionService.save(subscriptionDto,sessionUserId);
+        return "redirect:/subscriptions/my-subscriptions";
+    }
+
+    @GetMapping("/update/{id}")
+    public String showSubscriptionUpdateForm(Model model,  HttpSession httpSession, @PathVariable long id) {
         if (httpSession.getAttribute("userId") == null) {
             model.addAttribute("forbiddenMessage", "Вы не зарегистрированы. Пожалуйста, зарегистрируйтесь и повторите попытку.");
             return "forbidden";
@@ -83,6 +95,10 @@ public class SubscriptionController {
 
     @GetMapping("/my-subscriptions")//взять подписку пользователя
     public String getAllSubscriptionByUserId(Model model , HttpSession httpSession) {
+        if (httpSession.getAttribute("userId") == null) {
+            model.addAttribute("forbiddenMessage", "Вы не зарегистрированы. Пожалуйста, зарегистрируйтесь и повторите попытку.");
+            return "forbidden";
+        }
         Long userId = (Long) httpSession.getAttribute("userId");
        List<Subscription> allByUserId = subscriptionService.getSubscriptionsByUserId(userId);
        model.addAttribute("subscriptions", allByUserId);

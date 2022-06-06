@@ -12,35 +12,52 @@
 
             <div th:each="subscription : ${subscriptions}">
 
-                    <div>
-                        <span th:text="${subscription.league.name}"></span>
-                    </div>
+                <div>
+                    <span th:text="${subscription.league.name}"></span>
+                </div>
 
-                    <div>
-                        <span th:text="${subscription.cost}"></span>
-                    </div>
+                <div>
+                    <span th:text="${subscription.cost}"></span>
+                </div>
 
-                    <div>
-                        <span th:text="${subscription.period}"></span>
-                    </div>
+                <div>
+                    <span th:text="${subscription.period}"></span>
+                </div>
 
-                    <div>
-                        <a th:action="@{/subscribtions}" th:method="post" th:object="${subscription}">
-                            <h3>Подписаться</h3>
-                        </a>
-                    </div>
 
-                    <div>
-                        <a th:if="${session.userId == 1}"  th:href="@{/subscriptions/update}">
+                <form th:if="session.userId != null" th:action="@{/subscribtions/add-to-user}" th:method="post"
+                      th:object="${subscription}">
+                    <input type="submit" value="Подписаться">
+                </form>
+
+                <div>
+                    <nav th:if="${session.userId == 1}">
+                        <a th:href="@{/subscriptions/update/{id}(id=${subscription.id})}">
                             <h3>Редактировать подписку</h3>
                         </a>
-                    </div>
+                    </nav>
+                </div>
 
-                     <div th:if="${session.userId == 1}" th:field="*{subscription.id}" th:href="@{/subscription}" th:method="delete">
-                     Удалить подписку
-                    </div>
+
+                <div th:if="${session.userId == 1}">
+                    Удалить подписку
+                    <script>
+                        function deleteSubscription(subscriptionId) {
+                            fetch('/subscriptions/${subscriptionId}', {
+                                method: 'DELETE'
+                            })
+                            window.location = "/subscriptions"
+                        }
+                    </script>
+                </div>
 
             </div>
+
+            <nav><a th:if="${session.userId ==1 }"  th:href="@{/subscriptions/add}">
+                <label>
+                    Создать подписку
+                </label>
+            </a></nav>
 
         </div>
     </main>

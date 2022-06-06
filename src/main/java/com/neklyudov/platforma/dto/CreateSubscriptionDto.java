@@ -19,5 +19,7 @@ public class CreateSubscriptionDto {
     public Integer period;
     @NonNull
     public Long leagueId;
+    @NonNull
+    public String leagueName;
 
 }
