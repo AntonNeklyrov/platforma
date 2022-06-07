@@ -41,15 +41,15 @@
                 <input class="form-create-translation__time" type="time" th:field="*{time}"/>
             </div>
 
-<!--            <div class="form-create-translation__commentator">-->
-<!--                <label class="form-group">Комментатор</label><br>-->
-<!--                <select th:field="*{commentatorId}" id="commentatorId">-->
-<!--                    <option th:each="commentator : ${commentators}"-->
-<!--                            th:value="${сommentator.id}"-->
-<!--                            th:text="${commentator.lastName}">-->
-<!--                    </option>-->
-<!--                </select>-->
-<!--            </div>-->
+            <div class="form-create-translation__commentator">
+                <label class="form-group">Комментатор</label><br>
+                <select th:field="*{commentatorId}" id="commentatorId">
+                    <option th:each="сommentator : ${commentators}"
+                            th:value="${commentator?.id}"
+                            th:text="${commentator?.lastName}">
+                    </option>
+                </select>
+            </div>
 
             <div class="form-create-translation__submit-wrapper">
                 <input type="submit" value="Создать трансляцию"/>

@@ -15,7 +15,9 @@ public interface SubscriptionRepository {
 
     List<Subscription> findAll();
     List<Subscription> findByLeagueId(Long leagueId);
-    void updateCostAndDateById(Long id, Double cost, Date date);
+    void updateCostAndPeriodById(Long id, Double cost, int period);
     List<Subscription> findAllByUserId(Long userId);
     Optional<Subscription> findById(Long id);
+
+
 }

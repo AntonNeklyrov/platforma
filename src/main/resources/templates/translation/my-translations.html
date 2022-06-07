@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои трансляции</title>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header}"></div>
+    <main class="translation__main-content container-900">
+        <section th:each="translation : ${translations}">
+            <div>
+                <label>Лига</label>
+                <span th:text="${translation.league.name}"></span>
+            </div>
+
+            <div>
+                <label>Домашняя команда</label>
+                <span th:text="${translation.homeTeam}"></span>
+            </div>
+
+            <div>
+                <label>Гостевая команда</label>
+                <span th:text="${translation.guestTeam}"></span>
+            </div>
+
+            <div>
+                <label>Дата начала</label>
+                <span th:text="${translation.date}"></span>
+            </div>
+
+            <div>
+                <label>Время начала</label>
+                <span th:text="${translation.time}"></span>
+            </div>
+
+            <div>
+                <label>Комментатор</label>
+                <span th:if="${translation.commentator.id} != null" th:text="${translation.commentator.lastName}"></span>
+                <span th:if="${translation.commentator.id} == null" th:text="Трансляция проводится без комментаторов"></span>
+            </div>
+
+            <form th:if="${session.userId != null}" th:href="@{/translations/watch/{id}(id=${translation.id})}">
+                <input type="submit" value="Смотреть">
+            </form>
+
+        </section>
+    </main>
+</div>
+</body>
+<footer th:replace="fragments/footer"></footer>
+</html>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.List;
 import java.util.Optional;
 
@@ -171,6 +172,19 @@ public class TranslationRepositoryImpl implements TranslationRepository {
 
     }
 
+    @Override
+    public void updateTime(Long id, Time time) {
+        var sql = """
+                UPDATE translation
+                SET start_time = :startTime
+                WHERE id = :id;
+                """;
+
+        var params = new MapSqlParameterSource()
+                .addValue("startTime", time);
+        jdbcTemplate.update(sql, params);
+    }
+
     private Translation translationMapper(ResultSet rs, int rowNum) throws SQLException {
         return Translation.builder()
                 .id(rs.getLong("id"))
@@ -185,8 +199,8 @@ public class TranslationRepositoryImpl implements TranslationRepository {
                         .build())
                 .guestTeam(rs.getString("guest_team"))
                 .homeTeam(rs.getString("home_team"))
-                .date(rs.getDate("start_date"))
-                .time(rs.getTime("start_time"))
+                .date(rs.getDate("start_date").toLocalDate())
+                .time(rs.getTime("start_time").toLocalTime())
                 .build();
     }
 }

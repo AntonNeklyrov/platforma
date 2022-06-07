@@ -48,8 +48,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public void updateCostAndDateById(long id, Double cost, Date date) {
-        subscriptionRepository.updateCostAndDateById(id,cost,date);
+    public void updateCostAndPeriodById(long id, Double cost, int period) {
+        subscriptionRepository.updateCostAndPeriodById(id,cost,period);
     }
 
     @Override

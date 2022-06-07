@@ -54,31 +54,38 @@ public class TranslationController {
         var translationDto = new CreateTranslationDto();
         model.addAttribute("translation", translationDto);
         model.addAttribute("leagues", leagueService.getAllLeagues());
-        model.addAttribute("commentators", commentatorService.getAllCommentators());
+        var commentators = commentatorService.getAllCommentators();
+        System.out.println(commentators);
+        model.addAttribute("commentators", commentators);
         return "translation/translation-form";
     }
 
+    @GetMapping("/watch/{id}")
+    public String watchTranslation(@PathVariable Long id, HttpSession httpSession, Model model){
+        var translation = translationService.findById(id);
+        model.addAttribute("translation", translation);
+        return "translation/translation_page";
+    }
 
 
-    @GetMapping("/update")
+    @GetMapping("/update/{id}")
     public String showTranslationUpdateForm(Model model,
-                                    @RequestParam long id,
-                                    HttpSession httpSession) {
+                                            HttpSession httpSession,
+                                            @PathVariable Long id) {
         if (httpSession.getAttribute("userId") == null) {
             model.addAttribute("forbiddenMessage", "Вы не зарегистрированы. Пожалуйста, зарегистрируйтесь и повторите попытку.");
             return "forbidden";
         }
         model.addAttribute("updatedTranslation", UpdateTranslationDto.convert(translationService.findById(id)));
         model.addAttribute("commentators", commentatorService.getAllCommentators());
-        model.addAttribute("leagues", leagueService.getAllLeagues());
-        return "translation-update-form";
+        return "translation/translation-update-form";
     }
 
-//    @PutMapping("/{id}")
-//    public String updateTranslation(@PathVariable long id, UpdateTranslationDto translationDto) {
-//        translationService.updateTranslation(translationDto.);
-//        return "redirect:/main";
-//    }
+    @PutMapping("/{id}")
+    public String updateTranslation(@PathVariable long id, UpdateTranslationDto translationDto) {
+        translationService.updateTime(id, translationDto.time);
+        return "redirect:/main";
+    }
 
     @DeleteMapping("/id")
     public String deleteTranslation(@PathVariable long id){
@@ -86,21 +93,18 @@ public class TranslationController {
         return "redirect:/main";
     }
 
-//    @GetMapping("/{id}")
-//    public String getTranslation(@PathVariable long id, Model model, HttpSession session) {
-//
-//        Translation translation = translationService.findById(id);
-//
-//        if (commentatorId.isEmpty() && leagueId.isEmpty() || commentatorId.isPresent() && leagueId.isPresent()) {
-//            throw new RuntimeException();
-//        }
-//
-//        if (leagueId.isPresent()) {
-//            return translationService.getTranslationsByLeagueId(leagueId.get());
-//        }
-//
-//        return translationService.getTranslationsByCommentatorId(commentatorId.get());
-//    }
+    @GetMapping("/my-translations")
+    public String showMyTranslations(HttpSession httpSession, Model model){
+        if (httpSession.getAttribute("userId") == null) {
+            model.addAttribute("forbiddenMessage", "Вы не зарегистрированы. Пожалуйста, зарегистрируйтесь и повторите попытку.");
+            return "forbidden";
+        }
+        Long sessionUserId = (Long) httpSession.getAttribute("userId");
+        var translations = translationService.getTranslationsByUserId(sessionUserId);
+        model.addAttribute("translations", translations);
+        return "translation/my-translations";
+
+    }
 
     @GetMapping
     public String getAllTranslations(HttpSession httpSession, Model model) {

@@ -2,8 +2,10 @@ package com.neklyudov.platforma.service;
 
 import com.neklyudov.platforma.dto.CreateSubscriptionDto;
 import com.neklyudov.platforma.dto.CreateTranslationDto;
+import com.neklyudov.platforma.dto.UpdateTranslationDto;
 import com.neklyudov.platforma.model.Translation;
 
+import java.sql.Time;
 import java.util.List;
 
 public interface TranslationService {
@@ -20,4 +22,6 @@ public interface TranslationService {
 
     Long save(CreateTranslationDto translationDto, Long translationId);
     List<Translation> getTranslationsByUserId(Long userId);
+
+    void updateTime(Long id, Time time);
 }

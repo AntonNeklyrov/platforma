@@ -6,5 +6,24 @@
 </head>
 <body>
 
+<div class="wrapper">
+    <div th:replace="~{fragments/header}"></div>
+    <div class="create-form__wrapper container-1100">
+        <h1 class="create-form__header">Обновление подписки</h1>
+        <form class="form-update-translation" th:action="@{/translations/{id}(id=${updatedTranslation.id})}"
+              th:object="${updatedTranslation}" th:method="put">
+
+            <div class="form-update-translation__time">
+                <label>Время начала</label><br>
+                <input class="form-update-translation__time" type="time" th:field="*{time}"/>
+            </div>
+
+            <div class="form-update-translation_submit">
+                <input type="submit" value="Подтвердить">
+            </div>
+
+        </form>
+    </div>
+</div>
 </body>
 </html>

@@ -27,8 +27,8 @@ public class UpdateTranslationDto {
         updateTranslationDto.setLeague(translation.getLeague());
         updateTranslationDto.setGuestTeam(translation.getGuestTeam());
         updateTranslationDto.setHomeTeam(translation.getHomeTeam());
-        updateTranslationDto.setDate(translation.getDate());
-        updateTranslationDto.setTime(translation.getTime());
+//        updateTranslationDto.setDate(translation.getDate());
+//        updateTranslationDto.setTime(translation.getTime());
         updateTranslationDto.setUser(translation.getUser());
         updateTranslationDto.setCommentator(translation.getCommentator());
         return updateTranslationDto;

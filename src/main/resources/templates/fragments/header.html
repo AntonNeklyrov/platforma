@@ -6,7 +6,7 @@
       <nav><a th:href="@{/translations}">Трансляции</a></nav>
       <nav><a th:href="@{/subscriptions}">Подписки</a></nav>
         <nav th:if="${session.userId} != null"><a th:href="@{/subscriptions/my-subscriptions}">Мои подписки</a></nav>
-
+        <nav th:if="${session.userId} != null"><a th:href="@{/translations/my-translations}">Мои трансляции</a></nav>
     </div>
     <div class="header__right-buttons">
 <!--      <a class="publications__create-publications-btn btn" th:if="${session.userId != null}"-->

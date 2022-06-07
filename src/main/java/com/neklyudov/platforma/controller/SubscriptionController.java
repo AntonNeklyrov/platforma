@@ -3,6 +3,7 @@ package com.neklyudov.platforma.controller;
 import com.neklyudov.platforma.dto.CreateSubscriptionDto;
 import com.neklyudov.platforma.dto.UpdateSubscriptionDto;
 import com.neklyudov.platforma.model.Subscription;
+import com.neklyudov.platforma.service.CommentatorService;
 import com.neklyudov.platforma.service.LeagueService;
 import com.neklyudov.platforma.service.SubscriptionService;
 import com.neklyudov.platforma.service.UserService;
@@ -20,12 +21,14 @@ public class SubscriptionController {
     private final SubscriptionService subscriptionService;
     private final LeagueService leagueService;
     private final UserService userService;
+    private final CommentatorService commentatorService;
 
     @Autowired
-    public SubscriptionController(SubscriptionService subscriptionService, LeagueService leagueService, UserService userService) {
+    public SubscriptionController(SubscriptionService subscriptionService, LeagueService leagueService, UserService userService, CommentatorService commentatorService) {
         this.subscriptionService = subscriptionService;
         this.leagueService = leagueService;
         this.userService = userService;
+        this.commentatorService = commentatorService;
     }
 
     @GetMapping("/add")
@@ -52,8 +55,9 @@ public class SubscriptionController {
         return "redirect:/subscriptions";
     }
 
-    @PostMapping("/add-to-user")
-    public String addSubscriptionToUser(HttpSession httpSession, Subscription subscription){
+    @PostMapping("/add-to-user/{id}")
+    public String addSubscriptionToUser(HttpSession httpSession, @PathVariable long  id){
+        Subscription subscription =  subscriptionService.findById(id);
         CreateSubscriptionDto subscriptionDto = new CreateSubscriptionDto();
         Long sessionUserId = (Long) httpSession.getAttribute("userId");
         subscriptionDto.period = subscription.getPeriod();
@@ -75,13 +79,13 @@ public class SubscriptionController {
     }
 
     @PutMapping("/{id}")
-    public String updateSubscription(@PathVariable long id, UpdateSubscriptionDto subscriptionDto){
-        subscriptionService.updateCostAndDateById(id, subscriptionDto.cost, subscriptionDto.date);
+    public String updateSubscription(@PathVariable long id, @ModelAttribute UpdateSubscriptionDto subscriptionDto){
+        subscriptionService.updateCostAndPeriodById(id, subscriptionDto.cost, subscriptionDto.period);
         return "redirect:/subscriptions";
     }
 
-    @DeleteMapping
-    public String deleteSubscription(@PathVariable long id){
+    @PostMapping("/delete/{id}")
+    public String deleteSubscription(@PathVariable Long id){
         subscriptionService.deleteSubscription(id);
         return "redirect:/subscriptions";
     }

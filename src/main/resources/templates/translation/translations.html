@@ -11,43 +11,46 @@
         <div class="main-center">
 
             <div th:each="translation : ${translations}">
-
                 <div>
-                    <label>Лига</label>
-                    <span th:text="${translation.league.name}"></span>
+                    <div>
+                        <label>Лига</label>
+                        <span th:text="${translation.league.name}"></span>
+                    </div>
+
+                    <div>
+                        <label>Домашняя команда</label>
+                        <span th:text="${translation.homeTeam}"></span>
+                    </div>
+
+                    <div>
+                        <label>Гостевая команда</label>
+                        <span th:text="${translation.guestTeam}"></span>
+                    </div>
+
+                    <div>
+                        <label>Дата начала</label>
+                        <span th:text="${translation.date}"></span>
+                    </div>
+
+                    <div>
+                        <label>Время начала</label>
+                        <span th:text="${translation.time}"></span>
+                    </div>
+
+                    <div>
+                        <label>Комментатор</label>
+                        <span th:if="${translation.commentator.id} != null" th:text="${translation.homeTeam}"></span>
+                        <span th:if="${translation.commentator.id} == null"
+                              th:text="Игра транслируется без комментаторов"></span>
+
+
+<!--   todo  сделать заход комментатора на трансляцию в качестве комментатора-->
+
+
+
                 </div>
-
-                <div>
-                    <label>Домашняя команда</label>
-                    <span th:text="${translation.homeTeam}"></span>
-                </div>
-
-                <div>
-                    <label>Гостевая команда</label>
-                    <span th:text="${translation.guestTeam}"></span>
-                </div>
-
-                <div>
-                    <label>Дата начала</label>
-                    <span th:text="${translation.date}"></span>
-                </div>
-
-                <div>
-                    <label>Время начала</label>
-                    <span th:text="${translation.time}"></span>
-                </div>
-
-                <div>
-                    <label>Комментатор</label>
-                    <span th:if="${translation.commentator.id} != null" th:text="${translation.homeTeam}"></span>
-                    <span th:if="${translation.commentator.id} == null"
-                          th:text="Игра транслируется без комментаторов"></span>
-                </div>
-
-
             </div>
-
-            <nav><a th:if="${session.userId == 1 }"  th:href="@{/translations/add}">
+            <nav><a th:if="${session.userId == 1 }" th:href="@{/translations/add}">
                 <label>
                     Создать трансляцию
                 </label>
@@ -57,4 +60,6 @@
 
 </div>
 </body>
+
+<footer th:replace="fragments/footer"></footer>
 </html>

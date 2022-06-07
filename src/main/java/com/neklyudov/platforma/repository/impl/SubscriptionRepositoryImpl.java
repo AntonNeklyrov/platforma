@@ -78,7 +78,7 @@ import java.util.Optional;
         var sql = """
                 DELETE
                 FROM subscription
-                WHERE id = ? AND subscription.user_id = 1;
+                WHERE id = ?;
                 """;
         jdbcTemplate.getJdbcOperations().update(sql, id);
     }
@@ -91,8 +91,10 @@ import java.util.Optional;
                        subscription.league_id,
                        subscription.cost,
                        subscription.period,
-                       subscription.date
+                       subscription.date,
+                       l.name AS league_name
                 FROM subscription
+                INNER JOIN league l on l.id = subscription.league_id
                 Where subscription.user_id = 1;
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::subscriptionMapper);
@@ -106,12 +108,29 @@ import java.util.Optional;
                        subscription.league_id,
                        subscription.cost,
                        subscription.period,
-                       subscription.date
+                       subscription.date,
+                     l.name AS league_name
                 FROM subscription
                     INNER JOIN league l on l.id = subscription.league_id
                 WHERE l.id = ?
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::subscriptionMapper, leagueId);
+    }
+
+    @Override
+    public void updateCostAndPeriodById(Long id, Double cost, int period) {
+        var sql = """
+                UPDATE subscription
+                Set cost = :cost,
+                    period = :period
+                WHERE id = :id and user_id = 1;
+                """;
+        var params = new MapSqlParameterSource()
+                .addValue("cost", cost)
+                .addValue("period", period)
+                .addValue("id", id);
+
+        jdbcTemplate.update(sql, params);
     }
 
     @Override
@@ -122,9 +141,11 @@ import java.util.Optional;
                        subscription.league_id,
                        subscription.cost,
                        subscription.period,
-                       subscription.date
+                       subscription.date,
+                       l.name AS league_name
                 FROM subscription
                     INNER JOIN users u on u.id = subscription.user_id
+                    INNER JOIN league l on l.id = subscription.league_id
                 WHERE u.id = ?
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::subscriptionMapper,userId);
@@ -138,26 +159,13 @@ import java.util.Optional;
                        subscription.league_id,
                        subscription.cost,
                        subscription.period,
-                       subscription.date
+                       subscription.date,
+                         l.name AS league_name
                 FROM subscription
-                Where id = ?;
+                INNER JOIN league l on l.id = subscription.league_id
+                Where subscription.id = ?;
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::subscriptionMapper, id).stream().findAny();
-    }
-
-    @Override
-    public void updateCostAndDateById(Long id, Double cost, Date date) {
-        var sql = """
-                UPDATE subscription
-                Set cost = :cost,
-                    date = :date
-                WHERE id = :id;
-                """;
-        var params = new MapSqlParameterSource()
-                .addValue("cost", cost)
-                .addValue("date", date);
-
-        jdbcTemplate.update(sql, params);
     }
 
     private Subscription subscriptionMapper(ResultSet rs, int rowNum) throws SQLException {
@@ -168,6 +176,7 @@ import java.util.Optional;
                         .build())
                 .league(League.builder()
                         .id(rs.getLong("league_id"))
+                        .name(rs.getString("league_name"))
                         .build())
                 .cost(rs.getDouble("cost"))
                 .period(rs.getInt("period"))

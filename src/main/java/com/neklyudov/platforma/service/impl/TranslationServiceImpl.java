@@ -7,6 +7,9 @@ import com.neklyudov.platforma.repository.TranslationRepository;
 import com.neklyudov.platforma.service.TranslationService;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -59,8 +62,8 @@ public class TranslationServiceImpl implements TranslationService {
         Translation translation = Translation.builder()
                 .homeTeam(translationDto.getHomeTeam())
                 .guestTeam(translationDto.getGuestTeam())
-                .date(translationDto.getDate())
-                .time(translationDto.getTime())
+                .date(LocalDate.parse(translationDto.getDate()))
+                .time(LocalTime.parse(translationDto.getTime()))
                 .league(League.builder().id(translationDto.getLeagueId()).build())
                 .user(User.builder().id(userId).build())
                 .commentator(Commentator.builder().id(translationDto.getCommentatorId()).build())
@@ -71,5 +74,10 @@ public class TranslationServiceImpl implements TranslationService {
     @Override
     public List<Translation> getTranslationsByUserId(Long userId) {
         return translationRepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public void updateTime(Long id, Time time) {
+        translationRepository.updateTime(id, time);
     }
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Трансляция</title>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="~{fragments/header}"></div>
+
+    <div class="translation_main">
+
+        <div th:object="${translation}" >
+
+            <p th:text="${translation.league.name}">
+                Лига
+            </p>
+            <p th:text="${translation.homeTeam}">
+                Домашняя команда
+            </p>
+            <p th:text="${translation.guestTeam}">
+                Гостевая команда
+            </p>
+            <p th:text="${translation.date}">
+                Дата начала
+            </p>
+
+            <p th:text="${translation.time}">
+                Время начала
+            </p>
+
+            <p th:if="${translation.commentator.id} == null"  th:text="Игру никто не комментирует">
+            </p>
+
+            <p th:if="${translation.commentator.id} != null" th:text="${translation.commentator.lastName}" >
+                Комментатор
+            </p>
+
+             <img src="img/NBA.jpg">
+
+
+        </div>
+
+
+    </div>
+
+</div>
+</body>
+<footer th:replace="fragments/footer"></footer>
+</html>

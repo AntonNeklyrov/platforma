@@ -9,22 +9,24 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateTranslationDto {
-    @NonNull
+
     public Long leagueId;
-    @NonNull
+
     public String guestTeam;
-    @NonNull
+
     public String homeTeam;
-    @NonNull
-    public Date date;
-    @NonNull
-    public Time time;
+
+    public String date;
+
+    public String time;
 
     public Long commentatorId;
 }

@@ -15,9 +15,9 @@ public interface SubscriptionService {
 
     List<Subscription> getSubscriptionsByUserId(Long id);
     List<Subscription> getSubscriptionsByLeagueId(Long id);
-    void updateCostAndDateById(long id, Double cost, Date date);
+    void updateCostAndPeriodById(long id, Double cost, int period);
     List<Subscription> getAllSubscriptions();
-    public Long save(CreateSubscriptionDto subscriptionDto, Long subscriptionId);
-    public Subscription findById(Long id);
+    Long save(CreateSubscriptionDto subscriptionDto, Long subscriptionId);
+    Subscription findById(Long id);
 
 }

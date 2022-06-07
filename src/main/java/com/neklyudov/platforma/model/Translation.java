@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 
@@ -17,15 +19,15 @@ public class Translation {
     private League league;
     private String guestTeam;
     private String homeTeam;
-    private Date date;
-    private Time time;
+    private LocalDate date;
+    private LocalTime time;
     private User user;
     private Commentator commentator;
 
     public Translation() {
     }
 
-    public Translation(Long id, League league, String guestTeam, String homeTeam, Date date, Time time, User user, Commentator commentator) {
+    public Translation(Long id, League league, String guestTeam, String homeTeam, LocalDate date, LocalTime time, User user, Commentator commentator) {
         this.id = id;
         this.league = league;
         this.guestTeam = guestTeam;

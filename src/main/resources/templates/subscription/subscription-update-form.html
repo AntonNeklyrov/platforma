@@ -10,16 +10,16 @@
     <div class="create-form__wrapper container-1100">
         <h1 class="create-form__header">Обновление подписки</h1>
         <form class="form-create-subscription" th:action="@{/subscriptions/{id}(id=${updateSubscription.id})}"
-              th:object="${updateSubscription}" method="put">
+              th:object="${updateSubscription}" th:method="put">
 
             <div class="form-update-subscription_cost">
                 <label>Цена</label><br>
-                <textarea class="subscription__content" type="text" th:field="*{cost}"></textarea>
+                <input type="text" class="subscription__content" th:field="*{cost}"/>
             </div>
 
             <div class="form-update-subscription_period">
                 <label>Период</label><br>
-                <textarea class="subscription__period" type="text" th:field="*{period}"></textarea>
+                <input type="text" class="subscription__period"  th:field="*{period}"/>
             </div>
 
             <div class="form-update-subscription_submit">
@@ -28,5 +28,8 @@
         </form>
     </div>
 </div>
+
+<footer th:replace="fragments/footer"></footer>
+
 </body>
 </html>

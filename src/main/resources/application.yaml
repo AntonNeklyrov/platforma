@@ -14,3 +14,8 @@ spring:
    mode: HTML
    encoding: UTF-8
 
+  mvc:
+    hidden-method:
+      filter:
+        enabled: true
+

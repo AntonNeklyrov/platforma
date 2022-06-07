@@ -1,0 +1,1 @@
+insert into commentator (first_name, last_name, email, password) values ('Сергей', 'Алексеев', 'sergey@mail.ru', '123456')

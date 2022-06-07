@@ -4,6 +4,7 @@ import com.neklyudov.platforma.model.League;
 import com.neklyudov.platforma.model.Subscription;
 import com.neklyudov.platforma.model.Translation;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,4 +18,5 @@ public interface TranslationRepository {
     List<Translation> findByCommentatorId(Long commentatorId);
     Optional<Translation> findById(Long Id);
     List<Translation> findAllByUserId(Long userId);
+    void updateTime(Long id, Time time);
 }
