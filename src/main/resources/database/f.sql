@@ -1,1 +1,8 @@
-insert into commentator (first_name, last_name, email, password) values ('Сергей', 'Алексеев', 'sergey@mail.ru', '123456')
+select *
+from subscription
+inner join league l on l.id = subscription.league_id
+inner join translation t on l.id = t.league_id
+inner join commentator c on t.commentator_id = c.id
+where subscription.user_id = 1
+
+

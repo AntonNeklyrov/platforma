@@ -19,4 +19,5 @@ public interface TranslationRepository {
     Optional<Translation> findById(Long Id);
     List<Translation> findAllByUserId(Long userId);
     void updateTime(Long id, Time time);
+
 }

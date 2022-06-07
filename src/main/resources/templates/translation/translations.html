@@ -39,14 +39,10 @@
 
                     <div>
                         <label>Комментатор</label>
-                        <span th:if="${translation.commentator.id} != null" th:text="${translation.homeTeam}"></span>
+                        <span th:if="${translation.commentator.id} != null" th:text="${translation.commentator.lastName}"></span>
                         <span th:if="${translation.commentator.id} == null"
                               th:text="Игра транслируется без комментаторов"></span>
-
-
-<!--   todo  сделать заход комментатора на трансляцию в качестве комментатора-->
-
-
+                    </div>
 
                 </div>
             </div>

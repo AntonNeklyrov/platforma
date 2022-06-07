@@ -108,7 +108,7 @@ public class TranslationController {
 
     @GetMapping
     public String getAllTranslations(HttpSession httpSession, Model model) {
-        var translations = translationService.getTranslationsByUserId(1L);
+        var translations = translationService.getAllTranslations();
         model.addAttribute("translations", translations);
         return "translation/translations";
     }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Создание траниляции</title>
@@ -44,9 +44,9 @@
             <div class="form-create-translation__commentator">
                 <label class="form-group">Комментатор</label><br>
                 <select th:field="*{commentatorId}" id="commentatorId">
-                    <option th:each="сommentator : ${commentators}"
-                            th:value="${commentator?.id}"
-                            th:text="${commentator?.lastName}">
+                    <option th:each="c : ${commentators}"
+                            th:value="${c.id}"
+                            th:text="${c.lastName}">
                     </option>
                 </select>
             </div>

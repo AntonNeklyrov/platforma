@@ -91,9 +91,16 @@ public class TranslationRepositoryImpl implements TranslationRepository {
                        translation.guest_team,
                        translation.home_team,
                        translation.start_date,
-                       translation.start_time
+                       translation.start_time,
+                       l.id AS league_id,
+                       l.name AS name,
+                       c.id AS commentator_id,
+                       c.first_name,
+                       c.last_name
                 FROM translation
                 Inner JOIN users u on u.id = translation.user_id
+                inner join league l on l.id = translation.league_id
+                INNER JOIN commentator c on c.id = translation.commentator_id
                 WHERE u.id = 1;
                 """;
 
@@ -110,9 +117,15 @@ public class TranslationRepositoryImpl implements TranslationRepository {
                        translation.guest_team,
                        translation.home_team,
                        translation.start_date,
-                       translation.start_time
+                       translation.start_time,
+                       l.id AS league_id,
+                       l.name AS name,
+                       c.id AS commentator_id,
+                       c.first_name,
+                       c.last_name
                 FROM translation
                 INNER JOIN league l on l.id = translation.league_id
+                INNER JOIN commentator c on c.id = translation.commentator_id
                 WHERE l.id = ?
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::translationMapper);
@@ -128,9 +141,15 @@ public class TranslationRepositoryImpl implements TranslationRepository {
                        translation.guest_team,
                        translation.home_team,
                        translation.start_date,
-                       translation.start_time
+                       translation.start_time,
+                       l.id AS league_id,
+                       l.name AS name,
+                       c.id AS commentator_id,
+                       c.first_name,
+                       c.last_name
                 FROM translation
                 INNER JOIN commentator c on c.id = translation.commentator_id
+                inner join league l on l.id = translation.league_id
                 WHERE c.id = ?
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::translationMapper);
@@ -146,8 +165,15 @@ public class TranslationRepositoryImpl implements TranslationRepository {
                        translation.guest_team,
                        translation.home_team,
                        translation.start_date,
-                       translation.start_time
+                       translation.start_time,
+                      l.id AS league_id,
+                       l.name AS name,
+                       c.id AS commentator_id,
+                       c.first_name,
+                       c.last_name
                 FROM translation
+                inner join league l on l.id = translation.league_id
+                inner join commentator c on c.id = translation.commentator_id
                 WHERE translation.id = ?
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::translationMapper, Id)
@@ -157,16 +183,25 @@ public class TranslationRepositoryImpl implements TranslationRepository {
     @Override
     public List<Translation> findAllByUserId(Long userId) {
         var sql = """
-                SELECT translation.id,
+                SELECT distinct (translation.id),
                        translation.user_id,
                        translation.league_id,
                        translation.commentator_id,
                        translation.guest_team,
                        translation.home_team,
                        translation.start_date,
-                       translation.start_time
-                FROM translation
-                WHERE user_id = ?
+                       translation.start_time,
+                       l.id AS league_id,
+                       l.name AS name,
+                       c.id AS commentator_id,
+                       c.first_name,
+                       c.last_name
+                from subscription
+                inner join league l on l.id = subscription.league_id
+                inner join translation  on l.id = translation.league_id
+                inner join commentator c on translation.commentator_id = c.id
+                where subscription.user_id = ?
+              
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::translationMapper, userId);
 
@@ -193,9 +228,12 @@ public class TranslationRepositoryImpl implements TranslationRepository {
                         .build())
                 .league(League.builder()
                         .id(rs.getLong("league_id"))
+                        .name(rs.getString("name"))
                         .build())
                 .commentator(Commentator.builder()
                         .id(rs.getLong("commentator_id"))
+                        .firstName(rs.getString("first_name"))
+                        .lastName(rs.getString("last_name"))
                         .build())
                 .guestTeam(rs.getString("guest_team"))
                 .homeTeam(rs.getString("home_team"))
