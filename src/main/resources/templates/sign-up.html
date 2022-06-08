@@ -7,34 +7,81 @@
 <body>
 <div th:replace="~{fragments/header}"></div>
 <main class="auth-main container-1100">
-    <div class="auth-form_wrapper">
-        <h1 class="top-cover center-block"></h1>
-        <form class="auth-form" th:action="@{/sign-up}" th:object="${user}" method="post">
-            <div class="mb-3">
-                <label for="sign-up-first-name" class="form-label">Имя</label>
-                <input type="text" id="sign-up-first-name" th:field="*{firstName}" placeholder="Имя" required/>
+    <section class="vh-100" style="background-color: #2779e2;">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-9">
+                    <h1 class="text-white mb-4">Регистрация</h1>
+                    <form class="auth-form" th:action="@{/sign-up}" th:object="${user}" method="post">
+
+                        <div class="card" style="border-radius: 15px;">
+                            <div class="card-body">
+
+                                <div class="row align-items-center pt-4 pb-3">
+                                    <div class="col-md-3 ps-5">
+                                        <h6 class="mb-0">Имя</h6>
+                                    </div>
+                                    <div class="col-md-9 pe-5">
+                                    <input type="text" class="form-control form-control-lg" th:field="*{firstName}" placeholder="Имя"
+                                           required/>
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center pt-4 pb-3">
+                                    <div class="col-md-3 ps-5">
+                                        <h6 class="mb-0">Фамилия</h6>
+                                    </div>
+                                    <div class="col-md-9 pe-5">
+                                    <input type="text" class="form-control form-control-lg" th:field="*{lastName}"
+                                           placeholder="Фамилия"
+                                           required/>
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center pt-4 pb-3">
+                                    <div class="col-md-3 ps-5">
+                                        <h6 class="mb-0">Номер карты</h6>
+                                    </div>
+                                    <div class="col-md-9 pe-5">
+                                    <input type="text" class="form-control form-control-lg" th:field="*{cardNumber}"
+                                           placeholder="Платежные данные" required/>
+                                    </div>
+                                </div>
+
+
+                                <div class="row align-items-center pt-4 pb-3">
+                                    <div class="col-md-3 ps-5">
+                                        <h6 class="mb-0">Email</h6>
+                                    </div>
+                                    <div class="col-md-9 pe-5">
+                                    <input type="email" class="form-control form-control-lg" th:field="*{email}"
+                                           placeholder="Электронная почта"
+                                           required/>
+                                    </div>
+                                </div>
+
+
+                                <div class="row align-items-center pt-4 pb-3">
+                                    <div class="col-md-3 ps-5">
+                                        <h6 class="mb-0">Пароль</h6>
+                                    </div>
+                                    <div class="col-md-9 pe-5">
+                                    <input type="password" class="form-control form-control-lg" th:field="*{password}"
+                                           placeholder="Пароль"
+                                           required/>
+                                    </div>
+                                </div>
+
+                                <div class="px-5 py-4">
+                                    <input type="submit"  class="btn btn-primary btn-lg" value="Зарегистрироваться"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="sign-up-last-name" class="form-label">Фамилия</label>
-                <input type="text"  id="sign-up-last-name" th:field="*{lastName}" placeholder="Фамилия" required/>
-            </div>
-            <div class="mb-3">
-                <label for="sign-up-card-number" class="form-label">Платежные данные</label>
-                <input type="text" id="sign-up-card-number" th:field="*{cardNumber}" placeholder="Платежные данные" required/>
-            </div>
-            <div class="mb-3">
-                <label for="sign-up-email" class="form-label">Email</label>
-                <input type="text" id="sign-up-email" th:field="*{email}" placeholder="Электронная почта" required/>
-            </div>
-            <div class="mb-3">
-                <label for="sign-up-password" class="form-label">Пороль</label>
-                <input type="password"  id="sign-up-password" th:field="*{password}" placeholder="Пароль" required/>
-            </div>
-            <div class="mb-3">
-                <input type="submit" value="Зарегистрироваться"/>
-            </div>
-        </form>
-    </div>
+        </div>
+    </section>
 </main>
 </body>
 </html>
