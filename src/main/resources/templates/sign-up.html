@@ -8,14 +8,31 @@
 <div th:replace="~{fragments/header}"></div>
 <main class="auth-main container-1100">
     <div class="auth-form_wrapper">
-        <h1 class="auth-main_wrapper"></h1>
+        <h1 class="top-cover center-block"></h1>
         <form class="auth-form" th:action="@{/sign-up}" th:object="${user}" method="post">
-            <input type="text" th:field="*{firstName}" placeholder="Имя" required/>
-            <input type="text" th:field="*{lastName}" placeholder="Фамилия" required/>
-            <input type="text" th:field="*{cardNumber}" placeholder="Платежные данные" required/>
-            <input type="text" th:field="*{email}" placeholder="Электронная почта" required/>
-            <input type="password" th:field="*{password}" placeholder="Пароль" required/>
-            <input type="submit" value="Зарегистрироваться"/>
+            <div class="mb-3">
+                <label for="sign-up-first-name" class="form-label">Имя</label>
+                <input type="text" id="sign-up-first-name" th:field="*{firstName}" placeholder="Имя" required/>
+            </div>
+            <div class="mb-3">
+                <label for="sign-up-last-name" class="form-label">Фамилия</label>
+                <input type="text"  id="sign-up-last-name" th:field="*{lastName}" placeholder="Фамилия" required/>
+            </div>
+            <div class="mb-3">
+                <label for="sign-up-card-number" class="form-label">Платежные данные</label>
+                <input type="text" id="sign-up-card-number" th:field="*{cardNumber}" placeholder="Платежные данные" required/>
+            </div>
+            <div class="mb-3">
+                <label for="sign-up-email" class="form-label">Email</label>
+                <input type="text" id="sign-up-email" th:field="*{email}" placeholder="Электронная почта" required/>
+            </div>
+            <div class="mb-3">
+                <label for="sign-up-password" class="form-label">Пороль</label>
+                <input type="password"  id="sign-up-password" th:field="*{password}" placeholder="Пароль" required/>
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="Зарегистрироваться"/>
+            </div>
         </form>
     </div>
 </main>

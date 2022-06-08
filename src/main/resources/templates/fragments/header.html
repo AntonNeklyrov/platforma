@@ -1,21 +1,48 @@
+<!-- Только CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <div th:fragment="header" class="header__wrapper container-fluid">
   <header class="header container-1100">
-    <a th:href="@{/}" class="header__logo">Платформа</a>
+
     <div class="header__main">
-      <nav><a th:href="@{/main}">Главная</a></nav>
-      <nav><a th:href="@{/translations}">Трансляции</a></nav>
-      <nav><a th:href="@{/subscriptions}">Подписки</a></nav>
-        <nav th:if="${session.userId} != null"><a th:href="@{/subscriptions/my-subscriptions}">Мои подписки</a></nav>
-        <nav th:if="${session.userId} != null"><a th:href="@{/translations/my-translations}">Мои трансляции</a></nav>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <nav><a th:href="@{/main}"><button type="button" class="btn btn-primary">Главная</button></a></nav>
+                </div>
+                <div class="col-sm">
+                    <nav><a th:href="@{/translations}"><button type="button" class="btn btn-primary">Трансляции</button></a></nav>
+                    <nav><a th:href="@{/subscriptions}"><button type="button" class="btn btn-primary">Подписки</button></a></nav>
+                </div>
+                <div class="col-sm">
+                    <nav th:if="${session.userId} != null"><a th:href="@{/subscriptions/my-subscriptions}">
+                        <button type="button" class="btn btn-warning">Мои подписки</button>
+                    </a></nav>
+                    <nav th:if="${session.userId} != null"><a th:href="@{/translations/my-translations}">
+                        <button type="button" class="btn btn-warning">Мои трансляции</button>
+                    </a></nav>
+                    <a th:if="${session.userId == null}" class="header__sign-in btn" th:href="@{/sign-in}">
+                        <button type="button" class="btn btn-success">Войти</button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+<!--      <nav><a th:href="@{/main}"><button type="button" class="btn btn-primary">Главная</button></a></nav>-->
+<!--      <nav><a th:href="@{/translations}"><button type="button" class="btn btn-primary">Трансляции</button></a></nav>-->
+<!--      <nav><a th:href="@{/subscriptions}"><button type="button" class="btn btn-primary">Подписки</button></a></nav>-->
+<!--        <nav th:if="${session.userId} != null"><a th:href="@{/subscriptions/my-subscriptions}">-->
+<!--            <button type="button" class="btn btn-warning">Мои подписки</button>-->
+<!--        </a></nav>-->
+<!--        <nav th:if="${session.userId} != null"><a th:href="@{/translations/my-translations}">-->
+<!--            <button type="button" class="btn btn-warning">Мои трансляции</button>-->
+<!--        </a></nav>-->
     </div>
     <div class="header__right-buttons">
 <!--      <a class="publications__create-publications-btn btn" th:if="${session.userId != null}"-->
 <!--         th:href="@{/publications/add}">Написать публикацию</a>-->
-      <a th:if="${session.userId == null}" class="header__sign-in btn" th:href="@{/sign-in}">
-        Войти
-      </a>
       <a th:unless="${session.userId == null}" class="header__logout btn" th:href="@{/logout}">
-        Выйти
+          <button type="button" class="btn btn-danger">Выйти</button>
       </a>
     </div>
   </header>
