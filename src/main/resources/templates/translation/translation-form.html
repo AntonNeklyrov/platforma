@@ -5,58 +5,93 @@
     <title>Создание траниляции</title>
 </head>
 <body>
-<div class="wrapper">
-    <div th:replace="~{fragments/header}"></div>
-    <div class="create-form__wrapper container-1100">
-        <h1 class="create-form__header">Создание трансляции</h1>
-        <form class="form-create-translation" th:action="@{/translations}" th:object="${translation}"  method="post">
+<div th:replace="~{fragments/header}"></div>
+<section class="vh-100" style="background-color: #2779e2;">
+<div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-xl-9">
+            <h1 class="text-white mb-4">Создание трансляции</h1>
 
-            <div class="form-create-translation__leagues">
-                <label class="form-group">Лига</label><br>
-                <select th:field="*{leagueId}" id="leagueId">
-                    <option th:each="l : ${leagues}"
-                            th:value="${l.id}"
-                            th:text="${l.name}">
-                    </option>
-                </select>
-            </div>
+            <form class="form-create-translation" th:action="@{/translations}" th:object="${translation}" method="post">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body">
 
-            <div class="form-create-translation__homeTeam">
-                <label>Домашняя команда</label><br>
-                <input class="form-create-translation__homeTeam" type="text" th:field="*{homeTeam}"/>
-            </div>
+                        <div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+                                <h6 class="mb-0">Лига</h6>
+                            </div>
+                        <select th:field="*{leagueId}" id="leagueId" class="form-select"
+                                aria-label="Пример выбора по умолчанию">
+                            <option th:each="l : ${leagues}"
+                                    th:value="${l.id}"
+                                    th:text="${l.name}">
+                            </option>
+                        </select>
+                        </div>
 
-            <div class="form-create-translation__guestTeam">
-                <label>Гостевая команда</label><br>
-                <input class="form-create-translation__guestTeam" type="text" th:field="*{guestTeam}"/>
-            </div>
 
-            <div class="form-create-translation__data">
-                <label>Дата начала</label><br>
-                <input class="form-create-translation__data" type="date" th:field="*{date}"/>
-            </div>
+                        <div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+                                <h6 class="mb-0">Домашняя команда</h6>
+                            </div>
+                            <div class="col-md-9 pe-5">
+                                <input class="form-control form-control-lg" type="text" th:field="*{homeTeam}"/>
+                            </div>
+                        </div>
 
-            <div class="form-create-translation__time">
-                <label>Время начала</label><br>
-                <input class="form-create-translation__time" type="time" th:field="*{time}"/>
-            </div>
+                        <div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+                                <h6 class="mb-0">Гостевая команда</h6>
+                            </div>
+                            <div class="col-md-9 pe-5">
+                                <input class="form-control form-control-lg" type="text" th:field="*{guestTeam}"/>
+                            </div>
+                        </div>
 
-            <div class="form-create-translation__commentator">
-                <label class="form-group">Комментатор</label><br>
-                <select th:field="*{commentatorId}" id="commentatorId">
-                    <option th:each="c : ${commentators}"
-                            th:value="${c.id}"
-                            th:text="${c.lastName}">
-                    </option>
-                </select>
-            </div>
+                        <div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+                                <h6 class="mb-0">Дата начала</h6>
+                            </div>
+                            <div class="col-md-9 pe-5">
+                                <input class="form-control form-control-lg" type="date" th:field="*{date}"/>
+                            </div>
+                        </div>
 
-            <div class="form-create-translation__submit-wrapper">
-                <input type="submit" value="Создать трансляцию"/>
-            </div>
+                        <div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+                                <h6 class="mb-0">Время начала</h6>
+                            </div>
+                            <div class="col-md-9 pe-5">
+                                <input class="form-control form-control-lg" type="time" th:field="*{time}"/>
+                            </div>
+                        </div>
 
-        </form>
+
+                        <div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+                                <h6 class="mb-0">Комментатор</h6>
+                            </div>
+                        <select th:field="*{commentatorId}" id="commentatorId" class="form-select"
+                                aria-label="Пример выбора по умолчанию">
+                            <option th:each="c : ${commentators}"
+                                    th:value="${c.id}"
+                                    th:text="${c.lastName}">
+                            </option>
+                        </select>
+                        </div>
+
+
+                        <div class="px-5 py-4">
+                            <input type="submit" class="btn btn-primary btn-lg" value="Создать трансляцию"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
     </div>
 </div>
+</section>
 </body>
 </html>

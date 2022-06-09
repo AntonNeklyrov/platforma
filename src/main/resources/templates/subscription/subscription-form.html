@@ -5,41 +5,61 @@
     <title>Создание подписки</title>
 </head>
 <body>
-<div class="wrapper">
-    <div th:replace="~{fragments/header}"></div>
-    <div class="create-form__wrapper container-1100">
-        <h1 class="create-form__header">Создание подписки</h1>
-        <form class="form-create-subscription" th:action="@{/subscriptions}" th:object="${subscription}" method="post">
+<div th:replace="~{fragments/header}"></div>
+<section class="vh-100" style="background-color: #2779e2;">
 
-            <div class="form-create-subscription__leagues">
-                <label class="form-group">Лига</label><br>
-                <select th:field="*{leagueId}" id="leagueId">
-                    <option th:each="l : ${leagues}"
-                            th:value="${l.id}"
-                            th:text="${l.name}">
-                    </option>
-                </select>
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-9">
+                <h1 class="text-white mb-4">Создание подписки</h1>
+                <form class="form-create-subscription" th:action="@{/subscriptions}" th:object="${subscription}"
+                      method="post">
+
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body">
+
+
+                            <div class="row align-items-center pt-4 pb-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Лига</h6>
+                                </div>
+                                <select th:field="*{leagueId}" id="leagueId" class="form-select" aria-label="Пример выбора по умолчанию">
+                                    <option th:each="l : ${leagues}"
+                                            th:value="${l.id}"
+                                            th:text="${l.name}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="row align-items-center pt-4 pb-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Цена</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                <input class="form-control form-control-lg" type="text" th:field="*{cost}" required/>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+                                <h6 class="mb-0">Период</h6>
+                            </div>
+                            <div class="col-md-9 pe-5">
+                                <input class="form-control form-control-lg" type="text" th:field="*{period}"/>
+                            </div>
+                            </div>
+
+                            <div class="px-5 py-4">
+                                <input type="submit" class="btn btn-primary btn-lg" value="Создать подписку"/>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
             </div>
-
-            <div class="form-create-subscription__cost">
-                <label>Цена</label><br>
-                <input class="form-create-subscription__cost" type="text" th:field="*{cost}"/>
-            </div>
-
-            <div class="form-create-subscription__period">
-                <label>Количество месяцев</label><br>
-                <input class="form-create-subscription__period" type="text" th:field="*{period}"/>
-            </div>
-
-            <div class="form-create-subscription__submit-wrapper">
-                <input type="submit" value="Создать подписку"/>
-            </div>
-
-
-
-        </form>
+        </div>
     </div>
-</div>
+</section>
 </body>
-<footer th:replace="fragments/footer"></footer>
+
 </html>

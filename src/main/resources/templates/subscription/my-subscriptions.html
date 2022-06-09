@@ -5,21 +5,44 @@
     <title>Мои подписки</title>
 </head>
 <body>
-<div class="wrapper">
   <div th:replace="~{fragments/header}"></div>
-    <main class="publications__main-content container-900">
-        <section th:each="s : ${subscriptions}">
-            <p th:text="${s.league.name}">
-                Лига
-            </p>
-            <p th:text="${s.cost}">
-                Стоимость
-            </p>
-            <p th:text="${s.period}">
-                Период
-            </p>
-        </section>
-    </main>
-</div>
+  <div class="container">
+      <div class="row">
+          <div class="col-sm">
+              <h3>Лига</h3>
+          </div>
+          <div class="col-sm">
+              <h3>Стоимость</h3>
+          </div>
+          <div class="col-sm">
+              <h3>Период</h3>
+          </div>
+      </div>
+  </div>
+
+        <div th:each="s : ${subscriptions}">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-sm">
+
+                        <span th:text="${s.league.name}"></span>
+                    </div>
+
+                    <div class="col-sm">
+
+                        <span th:text="${s.cost}"></span>
+                    </div>
+
+                    <div class="col-sm">
+                        <span th:text="${s.period}"></span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
 </body>
+
 </html>

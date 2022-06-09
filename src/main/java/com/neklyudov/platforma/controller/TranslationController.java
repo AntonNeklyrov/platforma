@@ -62,6 +62,10 @@ public class TranslationController {
 
     @GetMapping("/watch/{id}")
     public String watchTranslation(@PathVariable Long id, HttpSession httpSession, Model model){
+        if (httpSession.getAttribute("userId") == null) {
+            model.addAttribute("forbiddenMessage", "Вы не зарегистрированы. Пожалуйста, зарегистрируйтесь и повторите попытку.");
+            return "forbidden";
+        }
         var translation = translationService.findById(id);
         model.addAttribute("translation", translation);
         return "translation/translation_page";

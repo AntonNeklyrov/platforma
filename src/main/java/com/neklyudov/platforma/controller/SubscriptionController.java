@@ -20,15 +20,13 @@ import java.util.List;
 public class SubscriptionController {
     private final SubscriptionService subscriptionService;
     private final LeagueService leagueService;
-    private final UserService userService;
-    private final CommentatorService commentatorService;
+
 
     @Autowired
-    public SubscriptionController(SubscriptionService subscriptionService, LeagueService leagueService, UserService userService, CommentatorService commentatorService) {
+    public SubscriptionController(SubscriptionService subscriptionService, LeagueService leagueService) {
         this.subscriptionService = subscriptionService;
         this.leagueService = leagueService;
-        this.userService = userService;
-        this.commentatorService = commentatorService;
+
     }
 
     @GetMapping("/add")
@@ -91,7 +89,7 @@ public class SubscriptionController {
     }
 
     @GetMapping
-    public String getAllSubscriptions(Model model) {
+    public String getAllSubscriptions(Model model, HttpSession httpSession) {
         List<Subscription> allSubscriptions = subscriptionService.getSubscriptionsByUserId(1L);
         model.addAttribute("subscriptions", allSubscriptions);
         return "subscription/subscriptions";

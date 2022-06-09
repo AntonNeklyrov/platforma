@@ -5,59 +5,84 @@
     <title>Трансляции</title>
 </head>
 <body>
+<div th:replace="~{fragments/header}"></div>
 
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h3>Лига</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Стоимость</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Период</h3>
+        </div>
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+        </div>
+    </div>
+</div>
 
-<div class="wrapper">
-    <div th:replace="~{fragments/header}"></div>
-    <main class="publications__main-content container-900">
-        <div class="main-center">
+<div th:each="subscription : ${subscriptions}">
+    <div class="container">
+        <div class="row">
 
-            <div th:each="subscription : ${subscriptions}">
+            <div class="col-sm">
 
-                <div>
-                    <h4>Лига</h4>
-                    <span th:text="${subscription.league.name}"></span>
-
-                </div>
-
-                <div>
-                    <h4>Стоимость</h4>
-                    <span th:text="${subscription.cost}"></span>
-                </div>
-
-                <div>
-                    <h4>Период</h4>
-                    <span th:text="${subscription.period}"></span>
-                </div>
-
-
-                <form th:if="${session.userId != null}" th:action="@{/subscriptions/add-to-user/{id}(id=${subscription.id})}" th:method="post">
-                    <input type="submit" value="Подписаться">
-                </form>
-
-                <div>
-                    <nav th:if="${session.userId == 1}">
-                        <a th:href="@{/subscriptions/update/{id}(id=${subscription.id})}">
-                            <h3>Редактировать</h3>
-                        </a>
-                    </nav>
-                </div>
-
-                <form th:if="${session.userId == 1}" th:action="@{/subscriptions/delete/{id}(id=${subscription.id})}" th:method="post">
-                   <input type="submit" value="Удалить">
-                </form>
-
+                <span th:text="${subscription.league.name}"></span>
             </div>
 
-            <nav><a th:if="${session.userId == 1 }"  th:href="@{/subscriptions/add}">
-                <label>
-                    Создать подписку
-                </label>
-            </a></nav>
+            <div class="col-sm">
+
+                <span th:text="${subscription.cost}"></span>
+            </div>
+
+            <div class="col-sm">
+                <span th:text="${subscription.period}"></span>
+            </div>
+
+            <div class="col-sm" th:if="${session.userId != null}">
+                <form th:action="@{/subscriptions/add-to-user/{id}(id=${subscription.id})}" th:method="post">
+                    <input type="submit" value="Подписаться" class="btn btn-primary">
+                </form>
+            </div>
+
+            <div class="col-sm" th:if="${session.userId == 1}">
+                <button type="button" class="btn btn-warning">
+                    <a th:href="@{/subscriptions/update/{id}(id=${subscription.id})}" style="text-decoration: none;">
+                        Редактировать
+                    </a>
+                </button>
+            </div>
+
+            <div class="col-sm" th:if="${session.userId == 1}">
+                <form th:action="@{/subscriptions/delete/{id}(id=${subscription.id})}"
+                      th:method="post">
+                    <input type="submit" value="Удалить" class="btn btn-danger">
+                </form>
+            </div>
 
         </div>
-    </main>
+
+    </div>
 </div>
+
+<div class="container">
+    <div th:if="${session.userId == 1}" class="row">
+        <div class="col-10"></div>
+        <div class="col-4">
+            <button type="button" class="btn btn-success">
+                <a th:href="@{/subscriptions/add}" class="text-decoration-none">
+                    Создать подписку
+                </a>
+            </button>
+        </div>
+    </div>
+</div>
+
 </body>
-<footer th:replace="fragments/footer"></footer>
 </html>

@@ -5,57 +5,75 @@
     <title>Трансляции</title>
 </head>
 <body>
-<div class="wrapper">
-    <div th:replace="~{fragments/header}"></div>
-    <div class="create-form__wrapper container-1100">
-        <div class="main-center">
+<div th:replace="~{fragments/header}"></div>
 
-            <div th:each="translation : ${translations}">
-                <div>
-                    <div>
-                        <label>Лига</label>
-                        <span th:text="${translation.league.name}"></span>
-                    </div>
-
-                    <div>
-                        <label>Домашняя команда</label>
-                        <span th:text="${translation.homeTeam}"></span>
-                    </div>
-
-                    <div>
-                        <label>Гостевая команда</label>
-                        <span th:text="${translation.guestTeam}"></span>
-                    </div>
-
-                    <div>
-                        <label>Дата начала</label>
-                        <span th:text="${translation.date}"></span>
-                    </div>
-
-                    <div>
-                        <label>Время начала</label>
-                        <span th:text="${translation.time}"></span>
-                    </div>
-
-                    <div>
-                        <label>Комментатор</label>
-                        <span th:if="${translation.commentator.id} != null" th:text="${translation.commentator.lastName}"></span>
-                        <span th:if="${translation.commentator.id} == null"
-                              th:text="Игра транслируется без комментаторов"></span>
-                    </div>
-
-                </div>
-            </div>
-            <nav><a th:if="${session.userId == 1 }" th:href="@{/translations/add}">
-                <label>
-                    Создать трансляцию
-                </label>
-            </a></nav>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h3>Лига</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Домашняя команда</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Гостевая команда</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Дата начала</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Время начала</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Комментатор</h3>
         </div>
     </div>
-
 </div>
-</body>
 
-<footer th:replace="fragments/footer"></footer>
+<div th:each="translation : ${translations}">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm">
+                <span th:text="${translation.league.name}"></span>
+            </div>
+
+            <div class="col-sm">
+                <span th:text="${translation.homeTeam}"></span>
+            </div>
+
+            <div class="col-sm">
+                <span th:text="${translation.guestTeam}"></span>
+            </div>
+
+            <div class="col-sm">
+                <span th:text="${translation.date}"></span>
+            </div>
+
+            <div class="col-sm">
+                <span th:text="${translation.time}"></span>
+            </div>
+
+            <div class="col-sm">
+                <span th:if="${translation.commentator.id} != null"
+                      th:text="${translation.commentator.firstName} + ' ' + ${translation.commentator.lastName}"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div th:if="${session.userId == 1 }" class="row">
+        <div class="col-10"></div>
+        <div class="col-4">
+            <button type="button" class="btn btn-success ">
+                <a th:href="@{/translations/add}" class="text-decoration-none">
+                    Создать трансляцию
+                </a>
+            </button>
+        </div>
+    </div>
+</div>
+
+</body>
 </html>

@@ -5,9 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-
+<div th:replace="~{fragments/header}"></div>
 <div class="wrapper">
-    <div th:replace="~{fragments/header}"></div>
+
     <div class="create-form__wrapper container-1100">
         <h1 class="create-form__header">Обновление подписки</h1>
         <form class="form-update-translation" th:action="@{/translations/{id}(id=${updatedTranslation.id})}"

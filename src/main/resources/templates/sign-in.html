@@ -1,29 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Войти</title>
-    <meta name="viewport"
+  <meta charset="UTF-8">
+  <title>Войти</title>
+  <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 </head>
 <body>
 <div th:replace="~{fragments/header}"></div>
-<div class="auth-main container-1100">
-  <div class="auth-form__wrapper">
-    <h1 class="auth-main__header">Вход</h1>
-    <form class="auth-form" th:action="@{/sign-in}" th:object="${user}" method="post">
-      <div class="form-group">
-        <input class="form-group" type="text" th:field="*{email}" minlength="3"  placeholder="Email" required/>
-        <!--                <div class="alert-warning" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>-->
+
+<section class="vh-100" style="background-color: #2779e2;">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-9">
+        <h1 class="text-white mb-4">Вход</h1>
+        <form class="auth-form" th:action="@{/sign-in}" th:object="${user}" method="post">
+
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body">
+
+              <div class="row align-items-center pt-4 pb-3">
+                <div class="col-md-3 ps-5">
+                  <h6 class="mb-0">Email</h6>
+                </div>
+                <div class="col-md-9 pe-5">
+                  <input class="form-control form-control-lg" type="text" th:field="*{email}" minlength="3"
+                         placeholder="Электронная почта"
+                         required/>
+                </div>
+              </div>
+
+              <div class="row align-items-center pt-4 pb-3">
+                <div class="col-md-3 ps-5">
+                  <h6 class="mb-0">Пароль</h6>
+                </div>
+                <div class="col-md-9 pe-5">
+                  <input class="form-control form-control-lg" type="password" th:field="*{password}" minlength="5"
+                         maxlength="100"
+                         placeholder="Пароль" required/>
+                </div>
+              </div>
+
+              <div class="row align-items-center pt-4 pb-3 text-center">
+                <a th:href="@{/sign-up}">Еще не зарегистрированы?</a>
+              </div>
+
+              <div class="px-5 py-4">
+                <input type="submit" class="btn btn-primary btn-lg" value="Войти"/>
+              </div>
+
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="form-group">
-        <input class="form-group" type="password" th:field="*{password}" minlength="5" maxlength="100" placeholder="Пароль" required/>
-        <!--                <div class="alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>-->
+      <div>
       </div>
-      <a th:href="@{/sign-up}">Еще не зарегистрированы?</a>
-      <input type="submit" value="Войти"/>
-    </form>
-  </div>
-</div>
+</section>
 </body>
 </html>

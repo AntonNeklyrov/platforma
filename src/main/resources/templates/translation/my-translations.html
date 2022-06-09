@@ -5,48 +5,73 @@
     <title>Мои трансляции</title>
 </head>
 <body>
-<div class="wrapper">
-    <div th:replace="~{fragments/header}"></div>
-    <main class="translation__main-content container-900">
-        <section th:each="translation : ${translations}">
-            <div>
-                <label>Лига</label>
+<div th:replace="~{fragments/header}"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h3>Лига</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Домашняя команда</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Гостевая команда</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Дата начала</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Время начала</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Комментатор</h3>
+        </div>
+        <div class="col-sm">
+        </div>
+    </div>
+</div>
+
+<section th:each="translation : ${translations}">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm">
                 <span th:text="${translation.league.name}"></span>
             </div>
 
-            <div>
-                <label>Домашняя команда</label>
+            <div class="col-sm">
                 <span th:text="${translation.homeTeam}"></span>
             </div>
 
-            <div>
-                <label>Гостевая команда</label>
+            <div class="col-sm">
                 <span th:text="${translation.guestTeam}"></span>
             </div>
 
-            <div>
-                <label>Дата начала</label>
+            <div class="col-sm">
                 <span th:text="${translation.date}"></span>
             </div>
 
-            <div>
-                <label>Время начала</label>
+            <div class="col-sm">
                 <span th:text="${translation.time}"></span>
             </div>
 
-            <div>
-                <label>Комментатор</label>
-                <span th:if="${translation.commentator.id} != null" th:text="${translation.commentator.lastName}"></span>
-                <span th:if="${translation.commentator.id} == null" th:text="Трансляция проводится без комментаторов"></span>
+            <div class="col-sm">
+                <span th:if="${translation.commentator.id} != null"
+                      th:text="${translation.commentator.firstName} + ' ' + ${translation.commentator.lastName}"></span>
             </div>
 
+            <div class="col-sm">
             <form th:if="${session.userId != null}" th:href="@{/translations/watch/{id}(id=${translation.id})}">
-                <input type="submit" value="Смотреть">
+                <input type="submit" value="Смотреть" class="btn btn-success">
             </form>
+            </div>
 
-        </section>
-    </main>
-</div>
+        </div>
+    </div>
+</section>
+
 </body>
-<footer th:replace="fragments/footer"></footer>
+
 </html>
