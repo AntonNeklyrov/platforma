@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-07-05T22:00:38.960561500Z</date>
+  <millis>1657058438960</millis>
+  <nanos>561500</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>com.neklyudov.platforma.PlatformaApplication</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Приложение запустилось!</message>
+</record>
+<record>
+  <date>2022-07-05T22:00:41.304973600Z</date>
+  <millis>1657058441304</millis>
+  <nanos>973600</nanos>
+  <sequence>4</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>com.neklyudov.platforma.PlatformaApplication</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Приложение завершило работу!</message>
+</record>

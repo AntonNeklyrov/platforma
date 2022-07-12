@@ -1,0 +1,4 @@
+июл. 06, 2022 1:41:14 AM com.neklyudov.platforma.PlatformaApplication main
+INFO: Приложение запустилось!
+июл. 06, 2022 1:41:17 AM com.neklyudov.platforma.PlatformaApplication main
+INFO: Приложение завершило работу!

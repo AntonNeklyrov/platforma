@@ -2,14 +2,12 @@ package com.neklyudov.platforma.controller;
 
 
 import com.neklyudov.platforma.model.Commentator;
-import com.neklyudov.platforma.model.User;
 import com.neklyudov.platforma.service.CommentatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/commentators")
@@ -22,7 +20,6 @@ public class CommentatorController {
         this.commentatorService = commentatorService;
     }
 
-
     @PostMapping
     public long createCommentator(@RequestBody Commentator commentator) {
         return commentatorService.addCommentator(commentator);
@@ -33,17 +30,14 @@ public class CommentatorController {
         commentatorService.updateCommentator(commentator);
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public void deleteCommentator(@PathVariable long id){
         commentatorService.deleteCommentator(id);
     }
 
-    @GetMapping("/search")
-    public Commentator getCommentatorById(@RequestParam Optional<Long> commentatorId) {
-        if(commentatorId.isEmpty()){
-            throw  new RuntimeException();
-        }
-        return commentatorService.getCommentatorById(commentatorId.get());
+    @GetMapping("/{id}")
+    public Commentator getCommentatorById(@PathVariable long id) {
+        return commentatorService.getCommentatorById(id);
     }
 
     @GetMapping

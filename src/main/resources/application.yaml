@@ -1,6 +1,7 @@
 server:
   servlet:
     context-path: /platforma/
+  port: 8080
 
 spring:
   datasource:
@@ -18,4 +19,15 @@ spring:
     hidden-method:
       filter:
         enabled: true
+  main:
+    allow-bean-definition-overriding: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health,info,metric
+  endpoint:
+    health:
+      show-details: always
 

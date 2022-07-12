@@ -3,10 +3,8 @@ package com.neklyudov.platforma.controller;
 import com.neklyudov.platforma.dto.CreateSubscriptionDto;
 import com.neklyudov.platforma.dto.UpdateSubscriptionDto;
 import com.neklyudov.platforma.model.Subscription;
-import com.neklyudov.platforma.service.CommentatorService;
 import com.neklyudov.platforma.service.LeagueService;
 import com.neklyudov.platforma.service.SubscriptionService;
-import com.neklyudov.platforma.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -95,7 +93,7 @@ public class SubscriptionController {
         return "subscription/subscriptions";
     }
 
-    @GetMapping("/my-subscriptions")//взять подписку пользователя
+    @GetMapping("/my-subscriptions")
     public String getAllSubscriptionByUserId(Model model , HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             model.addAttribute("forbiddenMessage", "Вы не зарегистрированы. Пожалуйста, зарегистрируйтесь и повторите попытку.");

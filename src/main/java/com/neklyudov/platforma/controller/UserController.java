@@ -17,13 +17,11 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService) {
-
         this.userService = userService;
     }
 
     @PostMapping
     public long createUser(@RequestBody User user) {
-
         return userService.addUser(user);
     }
 
@@ -42,7 +40,6 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable long id) {
-
         userService.deleteUser(id);
     }
 }

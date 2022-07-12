@@ -1,14 +1,10 @@
 package com.neklyudov.platforma.model;
 
-import com.neklyudov.platforma.model.League;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
+
 
 
 @Data
