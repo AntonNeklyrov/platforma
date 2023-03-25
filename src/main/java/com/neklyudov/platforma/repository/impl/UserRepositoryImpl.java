@@ -40,7 +40,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         jdbcTemplate.update(sql, params, keyHolder);
 
-        return (int) keyHolder.getKeys().get("id");
+        return (long) keyHolder.getKeys().get("id");
     }
 
     @Override

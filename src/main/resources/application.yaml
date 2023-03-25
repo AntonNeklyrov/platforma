@@ -6,9 +6,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/basket_platform
+    url: jdbc:postgresql://localhost:5432/basket-platform
     username: postgres
-    password: 1111
+    password: qwerty123
 
   thymeleaf:
    cache: false
