@@ -10,6 +10,7 @@ public interface UserRepository {
     void update(User user);
     void delete(long id);
 
+    List<User> getAllUsers();
     List<User> findBySubscriptionId(long subscriptionId);
     Optional<User> findById(Long id);
     Optional<User> getUserByEmailAndPassword(String email, String password);

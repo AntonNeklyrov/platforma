@@ -36,20 +36,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAllUsers() {
+        return userRepository.getAllUsers();
+    }
+
+    @Override
     public List<User> getUsersBySubscriptionId(Long subscriptionId) {
         return userRepository.findBySubscriptionId(subscriptionId);
     }
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() ->new RuntimeException("Uer not found"));
+        return userRepository.findById(id).orElseThrow(() ->new RuntimeException("Пользователь не найден"));
     }
 
     @Override
-    public Optional<Long> getUserByEmailAndPassword(User user) {
+    public User getUserByEmailAndPassword(User user) {
         Optional<User> optionalUser =  userRepository.getUserByEmailAndPassword(user.getEmail(), user.getPassword());
-        User dbUser = optionalUser.get();
-        return Optional.of(dbUser.getId());
+        return optionalUser.orElseThrow(() -> new RuntimeException("Пользователь не найден"));
     }
 
 //    @Override

@@ -26,15 +26,16 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public long save(User user) {
         var sql = """
-               INSERT INTO users(first_name,last_name,card_number,email,password)
-               VALUES(:firstName,:lastName,:cardNumber,:email, :password);
+               INSERT INTO users(first_name,last_name,card_number,email,password, role)
+               VALUES(:firstName,:lastName,:cardNumber,:email, :password, :role);
                """;
         var params = new MapSqlParameterSource()
                 .addValue("firstName", user.getFirstName())
                 .addValue("lastName", user.getLastName())
                 .addValue("cardNumber", user.getCardNumber())
                 .addValue("email", user.getEmail())
-                .addValue("password", user.getPassword());
+                .addValue("password", user.getPassword())
+                .addValue("role", "Пользователь");
 
         var keyHolder = new GeneratedKeyHolder();
 
@@ -51,16 +52,19 @@ public class UserRepositoryImpl implements UserRepository {
                     last_name = :lastName,
                     card_number = :card_number,
                     email = :email,
-                    password = :password
+                    password = :password,
+                    role = :role
                 WHERE id = :id;
                 """;
+
         var params = new MapSqlParameterSource()
                 .addValue("id", user.getId())
                 .addValue("firstName", user.getFirstName())
                 .addValue("lastName", user.getLastName())
                 .addValue("cardNumber", user.getCardNumber())
                 .addValue("email" , user.getEmail())
-                .addValue("password", user.getPassword());
+                .addValue("password", user.getPassword())
+                .addValue("role", user.getRole());
 
         jdbcTemplate.update(sql, params);
     }
@@ -76,14 +80,31 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public List<User> getAllUsers() {
+        var sql = """
+                SELECT users.id,
+                       users.first_name,
+                       users.last_name,
+                       users.card_number,
+                       users.email,
+                       users.password,
+                       users.role
+                FROM users
+                """;
+
+        return jdbcTemplate.getJdbcOperations().query(sql, this::userMapper);
+    }
+
+    @Override
     public List<User> findBySubscriptionId(long subscriptionId) {
         var sql = """
                 SELECT users.id,
                        users.first_name,
-                       users.middle_name,
+                       users.last_name,
                        users.card_number,
                        users.email,
                        users.password,
+                       users.role
                 FROM users
                     INNER JOIN subscription s on users.id = s.user_id
                 WHERE s.id = ?
@@ -100,7 +121,8 @@ public class UserRepositoryImpl implements UserRepository {
                           users.last_name,
                           users.card_number,
                           users.email,
-                          users.password
+                          users.password,
+                          users.role
                     FROM users 
                     WHERE id = ?;
                     """;

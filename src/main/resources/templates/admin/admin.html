@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/header}"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h3>Имя</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Фамилия</h3>
+        </div>
+        <div class="col-sm">
+            <h3>Email</h3>
+        </div>
+        <div class="col-sm">
+            <h3>роль</h3>
+        </div>
+    </div>
+
+    <section th:each="user : ${users}">
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm">
+                    <span th:text="${user.firstName}"></span>
+                </div>
+
+                <div class="col-sm">
+                    <span th:text="${user.lastName}"></span>
+                </div>
+
+                <div class="col-sm">
+                    <span th:text="${user.email}"></span>
+                </div>
+
+                <div class="col-sm">
+                    <span th:text="${user.role}"></span>
+                </div>
+
+                <div class="col-sm">
+                    <form th:href="@{/users/update/{id}(id =${user.id})}">
+                        <input type="submit" value="Редактировать" class="btn btn-success">
+                    </form>
+                </div>
+
+                <div class="col-sm">
+                    <form th:href="@{/users/delete/{id}(id=${user.id})}">
+                        <input type="submit" value="Удалить" class="btn btn-success">
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

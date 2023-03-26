@@ -1,20 +1,21 @@
 package com.neklyudov.platforma.controller;
 
-import com.neklyudov.platforma.dto.CreateSubscriptionDto;
 import com.neklyudov.platforma.dto.CreateTranslationDto;
 import com.neklyudov.platforma.dto.UpdateTranslationDto;
-import com.neklyudov.platforma.model.Commentator;
-import com.neklyudov.platforma.model.Translation;
+import com.neklyudov.platforma.model.League;
+import com.neklyudov.platforma.model.Team;
 import com.neklyudov.platforma.service.CommentatorService;
 import com.neklyudov.platforma.service.LeagueService;
+import com.neklyudov.platforma.service.TeamService;
 import com.neklyudov.platforma.service.TranslationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/translations")
@@ -24,12 +25,15 @@ public class TranslationController {
     private final TranslationService translationService;
     private final CommentatorService commentatorService;
     private final LeagueService leagueService;
+    private final TeamService teamService;
 
     @Autowired
-    public TranslationController(TranslationService translationService, CommentatorService commentatorService, LeagueService leagueService) {
+    public TranslationController(TranslationService translationService, CommentatorService commentatorService,
+                                 LeagueService leagueService, TeamService teamService) {
         this.translationService = translationService;
         this.commentatorService = commentatorService;
         this.leagueService = leagueService;
+        this.teamService = teamService;
     }
 
 
@@ -46,22 +50,25 @@ public class TranslationController {
     }
 
     @GetMapping("/add")
-    public String showTranslationForm(Model model, HttpSession httpSession){
+    public String showTranslationForm(Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("userId") == null) {
             model.addAttribute("forbiddenMessage", "Вы не зарегистрированы. Пожалуйста, зарегистрируйтесь и повторите попытку.");
             return "forbidden";
         }
         var translationDto = new CreateTranslationDto();
-        model.addAttribute("translation", translationDto);
-        model.addAttribute("leagues", leagueService.getAllLeagues());
         var commentators = commentatorService.getAllCommentators();
-        System.out.println(commentators);
+        var leagues = leagueService.getAllLeagues();
+
+
+        model.addAttribute("leagues", leagues);
+        model.addAttribute("translation", translationDto);
         model.addAttribute("commentators", commentators);
+
         return "translation/translation-form";
     }
 
     @GetMapping("/watch/{id}")
-    public String watchTranslation(@PathVariable Long id, HttpSession httpSession, Model model){
+    public String watchTranslation(@PathVariable Long id, HttpSession httpSession, Model model) {
         if (httpSession.getAttribute("userId") == null) {
             model.addAttribute("forbiddenMessage", "Вы не зарегистрированы. Пожалуйста, зарегистрируйтесь и повторите попытку.");
             return "forbidden";
@@ -92,13 +99,13 @@ public class TranslationController {
     }
 
     @DeleteMapping("/id")
-    public String deleteTranslation(@PathVariable long id){
+    public String deleteTranslation(@PathVariable long id) {
         translationService.deleteTranslation(id);
         return "redirect:/main";
     }
 
     @GetMapping("/my-translations")
-    public String showMyTranslations(HttpSession httpSession, Model model){
+    public String showMyTranslations(HttpSession httpSession, Model model) {
         if (httpSession.getAttribute("userId") == null) {
             model.addAttribute("forbiddenMessage", "Вы не зарегистрированы. Пожалуйста, зарегистрируйтесь и повторите попытку.");
             return "forbidden";
@@ -116,4 +123,20 @@ public class TranslationController {
         model.addAttribute("translations", translations);
         return "translation/translations";
     }
+
+
+    @ResponseBody
+    @GetMapping("/teams")
+    public Set getTeams(@RequestParam long leagueId) {
+
+        List<Team> teams = teamService.getTeamsByLeagueId(leagueId);
+        Set<String> teamsSet = new HashSet<>();
+        for(Team team : teams) {
+            teamsSet.add(team.getName());
+        }
+
+        return teamsSet;
+    }
+
+
 }

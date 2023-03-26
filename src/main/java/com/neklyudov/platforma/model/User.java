@@ -13,14 +13,18 @@ public class User {
     private String cardNumber;
     private String email;
     private String password;
+    private String role;
 
-    public User(Long id, String firstName, String lastName, String cardNumber, String email, String password) {
+    public User(Long id, String firstName,
+                String lastName, String cardNumber,
+                String email, String password, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.cardNumber = cardNumber;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public User() {

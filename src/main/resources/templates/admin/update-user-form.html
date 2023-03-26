@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Войти</title>
+    <title>Изменение пользователя</title>
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 </head>
@@ -15,10 +15,36 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-xl-9">
                 <h1 class="text-white mb-4">Вход</h1>
-                <form class="auth-form" th:action="@{/sign-in}" th:object="${user}" method="post">
+                <form class="auth-form" th:action="@{/update}" th:object="${updateUser}" method="post">
 
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body">
+
+
+                            <div class="row align-items-center pt-4 pb-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Имя</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    <input class="form-control form-control-lg" type="text" th:field="*{firstName}"
+                                           placeholder="Имя"
+                                           required
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center pt-4 pb-3">
+                                <div class="col-md-3 ps-5">
+                                    <h6 class="mb-0">Фамилия</h6>
+                                </div>
+                                <div class="col-md-9 pe-5">
+                                    <input class="form-control form-control-lg" type="text" th:field="*{lastName}"
+                                           placeholder="Фамилия"
+                                           required
+                                    />
+                                </div>
+                            </div>
+
 
                             <div class="row align-items-center pt-4 pb-3">
                                 <div class="col-md-3 ps-5">
@@ -28,7 +54,8 @@
                                     <input class="form-control form-control-lg" type="text" th:field="*{email}"
                                            minlength="3"
                                            placeholder="Электронная почта"
-                                           required/>
+                                           required
+                                    />
                                 </div>
                             </div>
 
@@ -40,13 +67,12 @@
                                     <input class="form-control form-control-lg" type="password" th:field="*{password}"
                                            minlength="5"
                                            maxlength="100"
-                                           placeholder="Пароль" required/>
+                                           placeholder="Пароль"
+                                           required
+                                    />
                                 </div>
                             </div>
 
-                            <div class="row align-items-center pt-4 pb-3 text-center">
-                                <a th:href="@{/sign-up}">Еще не зарегистрированы?</a>
-                            </div>
 
                             <div class="px-5 py-4">
                                 <input type="submit" class="btn btn-primary btn-lg" value="Войти"/>

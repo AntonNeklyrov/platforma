@@ -1,3 +1,15 @@
+
+create table users
+(
+    id          BIGSERIAL         not null,
+    first_name  varchar(100) not null,
+    last_name   varchar(100) not null,
+    card_number varchar(100) not null,
+    email       varchar(100),
+    password    varchar(100) not null,
+    constraint PK_USER primary key (id)
+);
+
 create table translation
 (
     id             BIGSERIAL   not null,
@@ -57,7 +69,20 @@ create table users
     constraint PK_USER primary key (id)
 );
 
+create table team
+(
+    id BIGSERIAL not null,
+    league_id BIGINT,
+    name varchar(100),
+    constraint PK_TEAM primary key (id)
+);
 
+create table dict_role
+(
+  id bigserial not null,
+  name varchar(100),
+  constraint PK_ROLE primary key (id)
+)
 
 
 

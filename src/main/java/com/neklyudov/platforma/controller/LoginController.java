@@ -49,15 +49,16 @@ public class LoginController {
 
     @PostMapping("/sign-in")
     public String signIn(@ModelAttribute User user, HttpSession httpSession) {
-        Optional<Long> optionalUserId = userService.getUserByEmailAndPassword(user);
-        httpSession.setAttribute("userId", optionalUserId.get());
+        User dbUser = userService.getUserByEmailAndPassword(user);
+        httpSession.setAttribute("userId", dbUser.getId());
+        httpSession.setAttribute("role", dbUser.getRole());
         return "redirect:/main";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
         httpSession.removeAttribute("userId");
-        httpSession.removeAttribute("isAdmin");
+        httpSession.removeAttribute("role");
         return "redirect:/main";
     }
 

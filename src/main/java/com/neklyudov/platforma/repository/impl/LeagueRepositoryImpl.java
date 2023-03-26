@@ -4,7 +4,9 @@ import com.neklyudov.platforma.model.League;
 import com.neklyudov.platforma.model.User;
 import com.neklyudov.platforma.repository.LeagueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -28,6 +30,23 @@ public class LeagueRepositoryImpl  implements LeagueRepository {
                 FROM league;
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::leagueMapper);
+    }
+
+    @Override
+    public long createLeague(League league) {
+        var sql = """
+                insert into league 
+                values (:name)
+                """;
+
+        var param = new MapSqlParameterSource()
+                .addValue("name",league.getName());
+
+        var keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(sql, param, keyHolder);
+
+
+        return (long) keyHolder.getKeys().get("id");
     }
 
 
