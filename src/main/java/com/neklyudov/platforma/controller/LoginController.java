@@ -1,6 +1,7 @@
 package com.neklyudov.platforma.controller;
 
 import com.neklyudov.platforma.model.User;
+import com.neklyudov.platforma.security.HashCoder;
 import com.neklyudov.platforma.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 @Controller
@@ -48,17 +50,17 @@ public class LoginController {
     }
 
     @PostMapping("/sign-in")
-    public String signIn(@ModelAttribute User user, HttpSession httpSession) {
+    public String signIn(@ModelAttribute User user, HttpSession httpSession)  {
         User dbUser = userService.getUserByEmailAndPassword(user);
         httpSession.setAttribute("userId", dbUser.getId());
-        httpSession.setAttribute("role", dbUser.getRole());
+        httpSession.setAttribute("isAdmin", dbUser.getRole().getId() == 1);
         return "redirect:/main";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
         httpSession.removeAttribute("userId");
-        httpSession.removeAttribute("role");
+        httpSession.removeAttribute("isAdmin");
         return "redirect:/main";
     }
 

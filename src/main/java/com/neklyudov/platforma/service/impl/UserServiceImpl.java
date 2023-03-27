@@ -1,11 +1,13 @@
 package com.neklyudov.platforma.service.impl;
 
+import com.neklyudov.platforma.model.Role;
 import com.neklyudov.platforma.model.User;
 import com.neklyudov.platforma.repository.UserRepository;
+import com.neklyudov.platforma.security.HashCoder;
 import com.neklyudov.platforma.service.UserService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,9 +22,13 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
+    @SneakyThrows
     @Override
     public long addUser(User user) {
-        return userRepository.save(user);
+        final byte [] salt = HashCoder.generateSalt();
+        String password = HashCoder.hashPassword(user.getPassword(),salt);
+        user.setPassword(password);
+        return userRepository.save(user, salt);
     }
 
     @Override
@@ -52,8 +58,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmailAndPassword(User user) {
-        Optional<User> optionalUser =  userRepository.getUserByEmailAndPassword(user.getEmail(), user.getPassword());
+
+        byte[] salt =  userRepository.getSaltForUser(user.getId());
+
+
+        Optional<User> optionalUser = userRepository.getUserByEmailAndPassword(user.getEmail(), user.getPassword());
+
+
+
         return optionalUser.orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+    }
+
+    @Override
+    public List<Role> geUserRoles() {
+        return userRepository.getUserRoles();
     }
 
 //    @Override

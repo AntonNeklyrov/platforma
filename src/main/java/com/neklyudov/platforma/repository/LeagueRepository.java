@@ -7,5 +7,5 @@ import java.util.List;
 public interface LeagueRepository {
 
     List<League> getAllLeagues();
-    long createLeague(League league);
+    long addLeague(League league);
 }

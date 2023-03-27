@@ -22,6 +22,11 @@
         <div class="col-sm">
             <h3>роль</h3>
         </div>
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+
+        </div>
     </div>
 
     <section th:each="user : ${users}">
@@ -42,17 +47,21 @@
                 </div>
 
                 <div class="col-sm">
-                    <span th:text="${user.role}"></span>
+                    <span th:text="${user.role.name}"></span>
                 </div>
 
-                <div class="col-sm">
-                    <form th:href="@{/users/update/{id}(id =${user.id})}">
-                        <input type="submit" value="Редактировать" class="btn btn-success">
-                    </form>
+                <div class="col-sm" th:if="${session.userId != null}">
+                    <button type="button" class="btn btn-warning">
+                        <a th:href="@{/users/update/{id}(id=${user.id})}" style="text-decoration: none;">
+                            Редактировать
+                        </a>
+                    </button>
                 </div>
 
-                <div class="col-sm">
-                    <form th:href="@{/users/delete/{id}(id=${user.id})}">
+
+                <div class="col-sm" th:if="${session.userId != null}">
+                    <form th:href="@{/users/delete/{id}(id=${user.id})}"
+                          th:method="post">
                         <input type="submit" value="Удалить" class="btn btn-success">
                     </form>
                 </div>

@@ -44,11 +44,9 @@
                                         <h6 class="mb-0">Домашняя команда</h6>
                                     </div>
 
-                                    <select th:field="*{homeTeam}"
-                                            id="homeTeam"
-                                            class="form-select">
-                                        <option value="0">--</option>
-                                    </select>
+                                    <div class="col-md-9 pe-5">
+                                        <input class="form-control form-control-lg"  th:field="*{homeTeam}"/>
+                                    </div>
 
                                 </div>
                             </td>
@@ -59,12 +57,9 @@
                                         <h6 class="mb-0">Гостевая команда</h6>
                                     </div>
 
-                                    <select th:field="*{guestTeam}"
-                                            id="guestTeam"
-                                            class="form-select">
-                                        <option value="0">--</option>
-                                    </select>
-
+                                    <div class="col-md-9 pe-5">
+                                        <input class="form-control form-control-lg" th:field="*{guestTeam}"/>
+                                    </div>
                                 </div>
                             </td>
 
@@ -107,7 +102,7 @@
                             </div>
 
 
-                            <script src="ajax.js"></script>
+
 
                             <!--                            <script type="text/javascript">-->
                             <!--                                $("#homeTeam").remoteChained({-->

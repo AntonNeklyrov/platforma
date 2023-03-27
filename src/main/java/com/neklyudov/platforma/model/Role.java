@@ -5,18 +5,16 @@ import lombok.Data;
 
 @Data
 @Builder
-public class League {
+public class Role {
 
     private Long id;
     private String name;
-    private String country;
 
-    public League() {
-    }
-
-    public League(Long id, String name, String country) {
+    public Role(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.country = country;
+    }
+
+    public Role() {
     }
 }

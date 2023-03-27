@@ -43,7 +43,7 @@
                 </button>
             </li>
 
-            <li class="nav-item" th:if="${session.userId} != null && ${session.role} == 'Администратор'">
+            <li class="nav-item" th:if="${session.userId} != null and ${session.isAdmin} == true">
                 <button type="button" class="btn btn-primary">
                     <a th:href="@{/users/admin}" class="nav-link active">
                         Панель администратора

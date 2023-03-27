@@ -1,9 +1,9 @@
 package com.neklyudov.platforma.service;
 
+import com.neklyudov.platforma.model.Role;
 import com.neklyudov.platforma.model.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
@@ -20,5 +20,7 @@ public interface UserService {
     User getUserById(Long id);
 
     User getUserByEmailAndPassword(User user);
+
+    List<Role> geUserRoles();
 
 }

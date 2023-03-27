@@ -1,12 +1,13 @@
 package com.neklyudov.platforma.repository;
 
+import com.neklyudov.platforma.model.Role;
 import com.neklyudov.platforma.model.User;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
-    long save(User user);
+    long save(User user, byte[] salt);
     void update(User user);
     void delete(long id);
 
@@ -15,5 +16,9 @@ public interface UserRepository {
     Optional<User> findById(Long id);
     Optional<User> getUserByEmailAndPassword(String email, String password);
     Optional<User> findUserByEmail(String email);
+
+    byte[] getSaltForUser(long id);
+
+    List<Role> getUserRoles();
 
 }

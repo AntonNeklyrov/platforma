@@ -12,12 +12,13 @@ public class User {
     private String lastName;
     private String cardNumber;
     private String email;
+    private byte[] salt;
     private String password;
-    private String role;
+    private Role role;
 
     public User(Long id, String firstName,
                 String lastName, String cardNumber,
-                String email, String password, String role) {
+                String email, String password, Role role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

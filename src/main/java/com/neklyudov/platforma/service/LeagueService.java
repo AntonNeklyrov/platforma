@@ -8,5 +8,8 @@ import java.util.List;
 
 public interface LeagueService {
 
+    Long addLeague(League league);
+
     List<League> getAllLeagues();
+
 }

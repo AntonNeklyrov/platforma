@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление лиги</title>
+</head>
+<body>
+<div th:replace="~{fragments/header}"></div>
+<section class="vh-100" style="background-color: #2779e2;">
+
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-9">
+        <h1 class="text-white mb-4">Добавление лиги</h1>
+        <form class="form-create-subscription" th:action="@{/leagues}" th:object="${league}"
+              method="post">
+
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body">
+
+
+              <div class="row align-items-center pt-4 pb-3">
+                <div class="col-md-3 ps-5">
+                  <h6 class="mb-0">Название</h6>
+                </div>
+                <div class="col-md-9 pe-5">
+                  <input class="form-control form-control-lg" type="text" th:field="*{name}" required/>
+                </div>
+              </div>
+
+              <div class="row align-items-center pt-4 pb-3">
+                <div class="col-md-3 ps-5">
+                  <h6 class="mb-0">Страна</h6>
+                </div>
+                <div class="col-md-9 pe-5">
+                  <input class="form-control form-control-lg" type="text" th:field="*{country}"/>
+                </div>
+              </div>
+
+              <div class="px-5 py-4">
+                <input type="submit" class="btn btn-primary btn-lg" value="Создать подписку"/>
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

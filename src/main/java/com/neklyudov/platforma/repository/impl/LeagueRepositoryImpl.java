@@ -26,25 +26,26 @@ public class LeagueRepositoryImpl  implements LeagueRepository {
     public List<League> getAllLeagues() {
         var sql = """
                 SELECT league.id,
-                       league.name
+                       league.name,
+                       league.country
                 FROM league;
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::leagueMapper);
     }
 
     @Override
-    public long createLeague(League league) {
+    public long addLeague(League league) {
         var sql = """
-                insert into league 
-                values (:name)
+                insert into league (name, country)
+                values (:name, :country)
                 """;
 
         var param = new MapSqlParameterSource()
-                .addValue("name",league.getName());
+                .addValue("name",league.getName())
+                .addValue("country", league.getCountry());
 
         var keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(sql, param, keyHolder);
-
 
         return (long) keyHolder.getKeys().get("id");
     }
@@ -54,6 +55,7 @@ public class LeagueRepositoryImpl  implements LeagueRepository {
         return League.builder()
                 .id(rs.getLong("id"))
                 .name(rs.getString("name"))
+                .country(rs.getString("country"))
                 .build();
     }
 }

@@ -15,6 +15,11 @@ public class LeagueServiceImpl implements LeagueService {
     }
 
     @Override
+    public Long addLeague(League league) {
+        return leagueRepository.addLeague(league);
+    }
+
+    @Override
     public List<League> getAllLeagues() {
         return  leagueRepository.getAllLeagues();
     }

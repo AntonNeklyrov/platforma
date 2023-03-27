@@ -51,7 +51,7 @@
                 </form>
             </div>
 
-            <div class="col-sm" th:if="${session.userId == 1}">
+            <div class="col-sm" th:if="${session.isAdmin == true}">
                 <button type="button" class="btn btn-warning">
                     <a th:href="@{/subscriptions/update/{id}(id=${subscription.id})}" style="text-decoration: none;">
                         Редактировать
@@ -59,7 +59,7 @@
                 </button>
             </div>
 
-            <div class="col-sm" th:if="${session.userId == 1}">
+            <div class="col-sm" th:if="${session.isAdmin == true}">
                 <form th:action="@{/subscriptions/delete/{id}(id=${subscription.id})}"
                       th:method="post">
                     <input type="submit" value="Удалить" class="btn btn-danger">
@@ -71,8 +71,8 @@
     </div>
 </div>
 
-<div class="container">
-    <div th:if="${session.userId == 1}" class="row">
+<div class="container" th:if="${session.isAdmin == true}">
+    <div class="row">
         <div class="col-10"></div>
         <div class="col-4">
             <button type="button" class="btn btn-success">
@@ -82,6 +82,18 @@
             </button>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-10"></div>
+        <div class="col-4">
+            <button type="button" class="btn btn-success">
+                <a th:href="@{/leagues/add}" class="text-decoration-none">
+                    Добавить лигу
+                </a>
+            </button>
+        </div>
+    </div>
+
 </div>
 
 </body>
