@@ -60,7 +60,7 @@
 
 
                 <div class="col-sm" th:if="${session.userId != null}">
-                    <form th:href="@{/users/delete/{id}(id=${user.id})}"
+                    <form th:action="@{/users/delete/{id}(id=${user.id})}"
                           th:method="post">
                         <input type="submit" value="Удалить" class="btn btn-success">
                     </form>

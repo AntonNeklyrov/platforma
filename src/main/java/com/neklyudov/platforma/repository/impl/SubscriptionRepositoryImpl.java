@@ -1,9 +1,6 @@
 package com.neklyudov.platforma.repository.impl;
 
-import com.neklyudov.platforma.model.Commentator;
-import com.neklyudov.platforma.model.League;
-import com.neklyudov.platforma.model.Subscription;
-import com.neklyudov.platforma.model.User;
+import com.neklyudov.platforma.model.*;
 import com.neklyudov.platforma.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -22,7 +19,7 @@ import java.util.Optional;
 @Repository
  public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 
-
+    public static final int PAGE_SIZE = 10;
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -166,6 +163,37 @@ import java.util.Optional;
                 Where subscription.id = ?;
                 """;
         return jdbcTemplate.getJdbcTemplate().query(sql, this::subscriptionMapper, id).stream().findAny();
+    }
+
+    @Override
+    public Integer getCount() {
+        final String sql = """
+                select count(*) from "subscription";
+                """;
+        return jdbcTemplate.getJdbcTemplate().queryForObject(sql, (rs, rowNum) -> rs.getInt("count"));
+
+    }
+
+    @Override
+    public SubscriptionPage findPage(int page) {
+
+        var sql = """
+                SELECT subscription.id,
+                       subscription.user_id,
+                       subscription.league_id,
+                       subscription.cost,
+                       subscription.period,
+                       subscription.date,
+                       l.name AS league_name
+                FROM subscription
+                INNER JOIN league l on l.id = subscription.league_id
+                Where subscription.user_id = 1
+                limit %d
+                offset %d * (?-1)
+                """.formatted(PAGE_SIZE, PAGE_SIZE);
+
+        return  new SubscriptionPage(jdbcTemplate.getJdbcTemplate().query(sql, this::subscriptionMapper,page),getCount());
+
     }
 
     private Subscription subscriptionMapper(ResultSet rs, int rowNum) throws SQLException {

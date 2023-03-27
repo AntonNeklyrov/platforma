@@ -11,7 +11,8 @@ class UserTest {
 
     @BeforeEach
     void prepareUser() {
-        user = new User(1L,"Андрей", "Неклюдов","12345678987","andr@mail.ru","12345");
+        user = new User(1L,"Андрей", "Неклюдов","12345678987","andr@mail.ru","12345",
+                new Role(1L, "Администратор"));
     }
 
     @Test

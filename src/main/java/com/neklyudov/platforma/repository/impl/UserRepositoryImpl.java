@@ -26,10 +26,10 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public long save(User user, byte[] salt) {
+    public long save(User user) {
         var sql = """
-                INSERT INTO users(first_name,last_name,card_number,email,password, role_id, salt)
-                VALUES(:firstName,:lastName,:cardNumber,:email, :password, :roleId, :salt);
+                INSERT INTO users(first_name,last_name,card_number,email,password, role_id)
+                VALUES(:firstName,:lastName,:cardNumber,:email, :password, :roleId);
                 """;
         var params = new MapSqlParameterSource()
                 .addValue("firstName", user.getFirstName())
@@ -37,8 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
                 .addValue("cardNumber", user.getCardNumber())
                 .addValue("email", user.getEmail())
                 .addValue("password", user.getPassword())
-                .addValue("roleId", 2)
-                .addValue("salt", new String(salt, StandardCharsets.UTF_8));
+                .addValue("roleId", 2);
 
         var keyHolder = new GeneratedKeyHolder();
 
@@ -110,7 +109,6 @@ public class UserRepositoryImpl implements UserRepository {
                         users.email as email,
                         users.password as password,
                         users.role_id as role_id,
-                        users.salt as salt, 
                         dr.name as role_name
                 FROM users
                     INNER JOIN subscription s on users.id = s.user_id
@@ -131,7 +129,6 @@ public class UserRepositoryImpl implements UserRepository {
                        users.email as email,
                        users.password as password,
                        users.role_id as role_id,
-                       users.salt as salt, 
                        dr.name as role_name
                  FROM users 
                  inner join dict_role dr on users.role_id = dr.id
@@ -151,7 +148,6 @@ public class UserRepositoryImpl implements UserRepository {
                        users.email as email,
                        users.password as password,
                        users.role_id as role_id,
-                       users.salt as salt, 
                        dr.name as role_name
                  FROM users 
                  inner join dict_role dr on users.role_id = dr.id
@@ -182,20 +178,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public byte[] getSaltForUser(long id) {
-        var sql = """
-                select salt 
-                from users
-                where id = ?
-                """;
-
-        return jdbcTemplate.getJdbcTemplate().query(sql, (rs, rowNum) -> rs.getString("salt"), id).stream()
-                .findAny()
-                .get()
-                .getBytes(StandardCharsets.UTF_8);
-    }
-
-    @Override
     public List<Role> getUserRoles() {
         var sql = """
                 select dict_role.id as role_id,
@@ -218,7 +200,6 @@ public class UserRepositoryImpl implements UserRepository {
                         .id(rs.getLong("role_id"))
                         .name(rs.getString("role_name"))
                         .build())
-                .salt(rs.getString("salt").getBytes())
                 .build();
     }
 

@@ -1,5 +1,6 @@
 package com.neklyudov.platforma.controller;
 
+import com.neklyudov.platforma.model.Role;
 import com.neklyudov.platforma.model.User;
 import com.neklyudov.platforma.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,10 @@ class UserControllerTest {
 
     @Test
     void testGetUser() throws Exception {
-    User user = new User(1L,"Андрей", "Неклюдов","12345678987","andr@mail.ru","12345");
+    User user = new User(1L,
+            "Андрей",
+            "Неклюдов","12345678987","andr@mail.ru","12345",
+            new Role(1L,"Администратор"));
         mockMvc.perform(get("/main"))
                 .andDo(print()).andExpect(status().isOk());
     }

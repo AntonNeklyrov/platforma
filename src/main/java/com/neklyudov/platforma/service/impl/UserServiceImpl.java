@@ -25,10 +25,7 @@ public class UserServiceImpl implements UserService {
     @SneakyThrows
     @Override
     public long addUser(User user) {
-        final byte [] salt = HashCoder.generateSalt();
-        String password = HashCoder.hashPassword(user.getPassword(),salt);
-        user.setPassword(password);
-        return userRepository.save(user, salt);
+        return userRepository.save(user);
     }
 
     @Override
@@ -59,12 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmailAndPassword(User user) {
 
-        byte[] salt =  userRepository.getSaltForUser(user.getId());
-
-
         Optional<User> optionalUser = userRepository.getUserByEmailAndPassword(user.getEmail(), user.getPassword());
-
-
 
         return optionalUser.orElseThrow(() -> new RuntimeException("Пользователь не найден"));
     }

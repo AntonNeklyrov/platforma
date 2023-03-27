@@ -1,5 +1,6 @@
 package com.neklyudov.platforma.service.impl;
 
+import com.neklyudov.platforma.model.Role;
 import com.neklyudov.platforma.model.User;
 import com.neklyudov.platforma.repository.UserRepository;
 import com.neklyudov.platforma.service.UserService;
@@ -31,7 +32,8 @@ class UserServiceTest {
 
     @Test
     void testFindUserById() {
-        User user =  new User(1L, "Андрей", "Неклюдов", "12345678987","andr@mail.ru","12345");
+        User user =  new User(1L, "Андрей", "Неклюдов", "12345678987","andr@mail.ru","12345",
+        new Role(1L, "Администратор"));
         when(userRepository.findById(anyLong()))
                 .thenReturn(Optional.of(user));
 

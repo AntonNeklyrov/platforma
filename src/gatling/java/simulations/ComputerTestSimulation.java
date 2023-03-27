@@ -32,7 +32,7 @@ public class ComputerTestSimulation extends Simulation {
 //    );
 
     ChainBuilder api = repeat(20).on(exec(http("GetApi")
-            .get("http://localhost:8080/platforma/api/qqq")
+            .get("http://localhost:8080/platforma/translations")
             .check(status().is(200)))
             .pause(1));
 

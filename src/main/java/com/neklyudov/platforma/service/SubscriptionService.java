@@ -2,6 +2,7 @@ package com.neklyudov.platforma.service;
 
 import com.neklyudov.platforma.dto.CreateSubscriptionDto;
 import com.neklyudov.platforma.model.Subscription;
+import com.neklyudov.platforma.model.SubscriptionPage;
 import com.neklyudov.platforma.model.Translation;
 
 import java.util.Date;
@@ -20,4 +21,5 @@ public interface SubscriptionService {
     Long save(CreateSubscriptionDto subscriptionDto, Long subscriptionId);
     Subscription findById(Long id);
 
+    SubscriptionPage findPage(int page);
 }

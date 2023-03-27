@@ -73,13 +73,19 @@ public class UserController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    public String deleteUser(@PathVariable Long id,
+                             Model model) {
         userService.deleteUser(id);
+        model.addAttribute("users", userService.getAllUsers());
         return "adminTemplate/admin";
     }
 
     @GetMapping("/admin")
     public String showDashboard(Model model, HttpSession httpSession) {
+        if (!((Boolean) httpSession.getAttribute("isAdmin"))) {
+            model.addAttribute("forbiddenMessage", "У вас нет доступа к этому разделу");
+            return "forbidden";
+        }
         var users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "adminTemplate/admin";

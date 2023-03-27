@@ -92,9 +92,8 @@
                                 </div>
 
                                 <div class="col-md-9 pe-5">
-                                    <select th:field="*{role.id}"
-                                            id=roleId"
-                                            class="form-select">
+                                    <select th:field="*{role.id}" id="roleId" class="form-select"
+                                            aria-label="Пример выбора по умолчанию">
                                         <option th:each="r : ${roles}"
                                                 th:value="${r.id}"
                                                 th:text="${r.name}">

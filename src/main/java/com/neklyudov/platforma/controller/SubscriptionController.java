@@ -3,6 +3,7 @@ package com.neklyudov.platforma.controller;
 import com.neklyudov.platforma.dto.CreateSubscriptionDto;
 import com.neklyudov.platforma.dto.UpdateSubscriptionDto;
 import com.neklyudov.platforma.model.Subscription;
+import com.neklyudov.platforma.model.SubscriptionPage;
 import com.neklyudov.platforma.service.LeagueService;
 import com.neklyudov.platforma.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,9 +88,13 @@ public class SubscriptionController {
     }
 
     @GetMapping
-    public String getAllSubscriptions(Model model, HttpSession httpSession) {
-        List<Subscription> allSubscriptions = subscriptionService.getSubscriptionsByUserId(1L);
-        model.addAttribute("subscriptions", allSubscriptions);
+    public String getAllSubscriptions(Model model,
+                                      HttpSession httpSession,
+                                      @RequestParam(defaultValue = "1") Integer page) {
+        SubscriptionPage subscriptionPage = subscriptionService.findPage(page);
+        model.addAttribute("subscriptions", subscriptionPage.getSubscriptions());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pagesCount", subscriptionPage.getRowsCount());
         return "subscription/subscriptions";
     }
 
